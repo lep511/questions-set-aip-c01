@@ -1,0 +1,6 @@
+{
+  "name": "Exam Simulator",
+  "description": "Mobile and desktop exam simulator and question practice app with instant feedback and custom JSON file loader.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
