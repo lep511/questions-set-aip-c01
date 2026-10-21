@@ -66,31 +66,31 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050608]/80 backdrop-blur-md animate-in fade-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-backdrop/80 backdrop-blur-md animate-in fade-in duration-200">
       <div 
-        className="relative w-full max-w-lg rounded-2xl bg-[#0E1015] border border-[#262B36] shadow-2xl p-6 sm:p-7 overflow-hidden"
+        className="relative w-full max-w-lg rounded-2xl bg-inset border border-line-soft shadow-2xl p-6 sm:p-7 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Subtle decorative accent */}
-        <div className="absolute -top-24 -right-24 w-48 h-48 bg-[#C5A059]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-48 h-48 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
 
         {/* Header */}
-        <div className="flex items-start justify-between pb-5 border-b border-[#1F2430]">
+        <div className="flex items-start justify-between pb-5 border-b border-line">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/30 text-[#DFB76C] text-xs font-mono mb-2">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-accent/10 border border-accent/30 text-accent-fg-strong text-xs font-mono mb-2">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Session Setup</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-[#F3F4F6]">
+            <h2 className="text-xl sm:text-2xl font-bold text-fg-strong">
               Choose Questions to Practice
             </h2>
-            <p className="text-xs sm:text-sm text-[#9CA3AF] mt-1">
+            <p className="text-xs sm:text-sm text-fg-muted mt-1">
               Select how many questions you want to solve from the {totalAvailable}-question bank.
             </p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 rounded-xl text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#1F2430] transition cursor-pointer"
+            className="p-2 rounded-xl text-fg-muted hover:text-fg-strong hover:bg-line transition cursor-pointer"
             title="Close"
           >
             <X className="w-5 h-5" />
@@ -99,7 +99,7 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
 
         {/* Question Count Selection */}
         <div className="mt-5">
-          <label className="block text-xs font-mono uppercase tracking-wider text-[#DFB76C] mb-2.5">
+          <label className="block text-xs font-mono uppercase tracking-wider text-accent-fg-strong mb-2.5">
             Number of Questions
           </label>
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
@@ -114,13 +114,13 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
                   onClick={() => onSelectCount(opt.value)}
                   className={`flex flex-col items-center justify-center p-3 rounded-xl border text-center transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-[#C5A059]/15 border-[#C5A059] text-[#F3F4F6] shadow-md shadow-[#C5A059]/10'
-                      : 'bg-[#141720] border-[#1F2430] text-[#9CA3AF] hover:border-[#384050] hover:text-[#D1D5DB]'
+                      ? 'bg-accent/15 border-accent text-fg-strong shadow-md shadow-accent/10'
+                      : 'bg-surface-raised border-line text-fg-muted hover:border-line-hover hover:text-fg'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 mb-1.5 ${isSelected ? 'text-[#DFB76C]' : 'text-[#6B7280]'}`} />
+                  <Icon className={`w-4 h-4 mb-1.5 ${isSelected ? 'text-accent-fg-strong' : 'text-fg-subtle'}`} />
                   <span className="text-xs sm:text-sm font-bold block">{opt.label}</span>
-                  <span className="text-[10px] text-[#6B7280] line-clamp-1 mt-0.5">{opt.desc}</span>
+                  <span className="text-[10px] text-fg-subtle line-clamp-1 mt-0.5">{opt.desc}</span>
                 </button>
               );
             })}
@@ -129,7 +129,7 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
 
         {/* Mode Selector */}
         <div className="mt-5">
-          <label className="block text-xs font-mono uppercase tracking-wider text-[#DFB76C] mb-2.5">
+          <label className="block text-xs font-mono uppercase tracking-wider text-accent-fg-strong mb-2.5">
             Study Mode
           </label>
           <div className="space-y-2">
@@ -143,20 +143,20 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
                   onClick={() => onSelectMode(opt.id)}
                   className={`w-full flex items-start gap-3 p-3 rounded-xl border text-left transition-all cursor-pointer ${
                     isSelected
-                      ? 'bg-[#C5A059]/10 border-[#C5A059]/80 text-[#F3F4F6]'
-                      : 'bg-[#141720] border-[#1F2430] text-[#9CA3AF] hover:border-[#384050] hover:text-[#D1D5DB]'
+                      ? 'bg-accent/10 border-accent/80 text-fg-strong'
+                      : 'bg-surface-raised border-line text-fg-muted hover:border-line-hover hover:text-fg'
                   }`}
                 >
                   <div className={`mt-0.5 w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
-                    isSelected ? 'border-[#C5A059] bg-[#C5A059]' : 'border-[#4B5563]'
+                    isSelected ? 'border-accent bg-accent' : 'border-line-gray-strong'
                   }`}>
-                    {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-[#0A0B0E]" />}
+                    {isSelected && <div className="w-1.5 h-1.5 rounded-full bg-on-accent" />}
                   </div>
                   <div>
-                    <span className={`text-xs sm:text-sm font-bold block ${isSelected ? 'text-[#DFB76C]' : 'text-[#E5E7EB]'}`}>
+                    <span className={`text-xs sm:text-sm font-bold block ${isSelected ? 'text-accent-fg-strong' : 'text-fg-bright'}`}>
                       {opt.title}
                     </span>
-                    <span className="text-[11px] sm:text-xs text-[#9CA3AF] leading-relaxed block mt-0.5">
+                    <span className="text-[11px] sm:text-xs text-fg-muted leading-relaxed block mt-0.5">
                       {opt.desc}
                     </span>
                   </div>
@@ -167,18 +167,18 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
         </div>
 
         {/* Shuffle Option */}
-        <div className="mt-4 pt-3 border-t border-[#1F2430] flex items-center justify-between">
-          <label className="flex items-center gap-2.5 text-xs text-[#D1D5DB] cursor-pointer">
+        <div className="mt-4 pt-3 border-t border-line flex items-center justify-between">
+          <label className="flex items-center gap-2.5 text-xs text-fg cursor-pointer">
             <input
               type="checkbox"
               id="start-shuffle-checkbox"
               checked={shouldShuffle}
               onChange={(e) => setShouldShuffle(e.target.checked)}
-              className="w-4 h-4 rounded-sm border-[#374151] bg-[#161922] text-[#C5A059] focus:ring-[#C5A059]/50 accent-[#C5A059] cursor-pointer"
+              className="w-4 h-4 rounded-sm border-line-gray bg-elevated text-accent-fg focus:ring-accent/50 accent-accent cursor-pointer"
             />
             <span>Shuffle questions in random order</span>
           </label>
-          <span className="text-[11px] font-mono text-[#6B7280]">
+          <span className="text-[11px] font-mono text-fg-subtle">
             Pool: {totalAvailable} Qs
           </span>
         </div>
@@ -189,7 +189,7 @@ export const StartQuizModal: React.FC<StartQuizModalProps> = ({
             id="start-session-btn"
             type="button"
             onClick={handleStart}
-            className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-[#C5A059] to-[#DFB76C] text-[#0A0B0E] font-bold text-sm sm:text-base hover:brightness-110 shadow-lg shadow-[#C5A059]/20 transition-all cursor-pointer"
+            className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-accent to-accent-hover text-on-accent font-bold text-sm sm:text-base hover:brightness-110 shadow-lg shadow-accent/20 transition-all cursor-pointer"
           >
             <span>Start Practice Session</span>
             <ArrowRight className="w-4 h-4" />

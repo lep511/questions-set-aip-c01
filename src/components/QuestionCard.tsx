@@ -92,17 +92,17 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
     : 'text-sm sm:text-base';
 
   return (
-    <div ref={cardRef} className="w-full bg-[#12141A] border border-[#1F2430] rounded-2xl p-4 sm:p-7 shadow-xl transition-all">
+    <div ref={cardRef} className="w-full bg-surface border border-line rounded-2xl p-4 sm:p-7 shadow-xl transition-all">
       
       {/* Header bar: Question index, Multi-select badge, Category, Flag button */}
-      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-[#1F2430]">
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-4 mb-4 border-b border-line">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="px-2.5 py-1 rounded-lg bg-[#1A1D27] text-[#D1D5DB] border border-[#1F2430] font-semibold text-xs">
+          <span className="px-2.5 py-1 rounded-lg bg-subtle text-fg border border-line font-semibold text-xs">
             Question {currentIndex + 1} of {totalQuestions}
           </span>
 
           {isMulti && (
-            <span className="px-2.5 py-1 rounded-lg bg-[#C5A059]/10 text-[#DFB76C] border border-[#C5A059]/30 text-xs font-semibold flex items-center gap-1">
+            <span className="px-2.5 py-1 rounded-lg bg-accent/10 text-accent-fg-strong border border-accent/30 text-xs font-semibold flex items-center gap-1">
               <span>Select {question.requiredSelectCount}</span>
               {selectedAnswers.length > 0 && (
                 <span className="opacity-75">
@@ -113,7 +113,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           )}
 
           {question.category && (
-            <span className="px-2.5 py-1 rounded-lg bg-[#161922] text-[#9CA3AF] border border-[#1F2430] text-xs hidden sm:inline-block">
+            <span className="px-2.5 py-1 rounded-lg bg-elevated text-fg-muted border border-line text-xs hidden sm:inline-block">
               {question.category}
             </span>
           )}
@@ -126,8 +126,8 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             onClick={onToggleFlag}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition ${
               isFlagged
-                ? 'bg-[#C5A059] text-[#0A0B0E] border-[#C5A059] shadow-xs'
-                : 'border-[#1F2430] bg-[#161922] text-[#9CA3AF] hover:text-[#F3F4F6] hover:border-[#C5A059]/40'
+                ? 'bg-accent text-on-accent border-accent shadow-xs'
+                : 'border-line bg-elevated text-fg-muted hover:text-fg-strong hover:border-accent/40'
             }`}
             title={isFlagged ? 'Flagged for review' : 'Flag question for review'}
           >
@@ -139,7 +139,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* Question Text */}
       <div className="mb-6">
-        <h2 className={`${questionTextClass} font-bold text-[#F3F4F6] leading-relaxed whitespace-pre-line tracking-tight`}>
+        <h2 className={`${questionTextClass} font-bold text-fg-strong leading-relaxed whitespace-pre-line tracking-tight`}>
           {question.question}
         </h2>
       </div>
@@ -152,26 +152,26 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
           const showFeedback = mode === 'practice' && isChecked;
 
           // Determine option styling based on mode and checked state
-          let containerStyle = 'border-[#1F2430] bg-[#161922] hover:border-[#C5A059]/40 hover:bg-[#1A1E2A]';
-          let badgeStyle = 'bg-[#1F2430] text-[#D1D5DB] border-[#2A3244]';
+          let containerStyle = 'border-line bg-elevated hover:border-accent/40 hover:bg-elevated-hover';
+          let badgeStyle = 'bg-line text-fg border-line-strong';
 
           if (showFeedback) {
             if (isCorrect) {
               // Highlight correct answer
-              containerStyle = 'border-emerald-500/80 bg-emerald-950/30';
+              containerStyle = 'border-emerald-500/80 bg-emerald-50 dark:bg-emerald-950/30';
               badgeStyle = 'bg-emerald-600 text-white border-emerald-500 font-bold';
             } else if (isSelected && !isCorrect) {
               // Highlight incorrect choice - maintain same opacity as correct
-              containerStyle = 'border-rose-500/80 bg-rose-950/30';
+              containerStyle = 'border-rose-500/80 bg-rose-50 dark:bg-rose-950/30';
               badgeStyle = 'bg-rose-600 text-white border-rose-500 font-bold';
             } else {
               // Unselected other options - maintain visibility
-              containerStyle = 'border-[#1F2430] bg-[#161922]';
+              containerStyle = 'border-line bg-elevated';
             }
           } else if (isSelected) {
             // Selected before checking
-            containerStyle = 'border-[#C5A059] bg-[#C5A059]/10 ring-1 ring-[#C5A059]/40';
-            badgeStyle = 'bg-[#C5A059] text-[#0A0B0E] border-[#C5A059] font-bold';
+            containerStyle = 'border-accent bg-accent/10 ring-1 ring-accent/40';
+            badgeStyle = 'bg-accent text-on-accent border-accent font-bold';
           }
 
           const hasDetails = Boolean(option.explanation || (option.references && option.references.length > 0));
@@ -206,25 +206,25 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 {/* Option Content Text */}
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center justify-between gap-1 mb-1">
-                    <span className="text-[11px] font-mono text-[#9CA3AF] uppercase tracking-wider">
+                    <span className="text-[11px] font-mono text-fg-muted uppercase tracking-wider">
                       Option {option.id}
                     </span>
 
                     {/* Feedback Badges */}
                     {showFeedback && isCorrect && (
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-950/80 border border-emerald-700/60 text-emerald-400 text-[11px] font-bold flex items-center gap-1">
+                      <span className="px-2 py-0.5 rounded-full bg-emerald-50 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-700/60 text-emerald-700 dark:text-emerald-400 text-[11px] font-bold flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3" /> Correct Answer
                       </span>
                     )}
 
                     {showFeedback && isSelected && !isCorrect && (
-                      <span className="px-2 py-0.5 rounded-full bg-rose-950/80 border border-rose-700/60 text-rose-400 text-[11px] font-bold flex items-center gap-1">
+                      <span className="px-2 py-0.5 rounded-full bg-rose-50 dark:bg-rose-950/80 border border-rose-300 dark:border-rose-700/60 text-rose-700 dark:text-rose-400 text-[11px] font-bold flex items-center gap-1">
                         <XCircle className="w-3 h-3" /> Your Selection (Incorrect)
                       </span>
                     )}
                   </div>
 
-                  <p className={`${optionTextClass} text-[#E5E7EB] leading-relaxed`}>
+                  <p className={`${optionTextClass} text-fg-bright leading-relaxed`}>
                     {option.text}
                   </p>
                 </div>
@@ -232,22 +232,22 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
               {/* Option-Specific In-Depth Explanation & References (Revealed after checking) */}
               {showFeedback && hasDetails && (
-                <div className="px-3.5 sm:px-4 pb-3.5 pt-1 border-t border-[#1F2430] bg-[#0E1015]/70">
+                <div className="px-3.5 sm:px-4 pb-3.5 pt-1 border-t border-line bg-inset/70">
                   <button
                     onClick={() => toggleExplanation(option.id)}
-                    className="flex items-center justify-between w-full py-1 text-xs font-semibold text-[#9CA3AF] hover:text-[#F3F4F6] transition"
+                    className="flex items-center justify-between w-full py-1 text-xs font-semibold text-fg-muted hover:text-fg-strong transition"
                   >
                     <span className="flex items-center gap-1.5">
-                      <Info className="w-3.5 h-3.5 text-[#C5A059]" />
+                      <Info className="w-3.5 h-3.5 text-accent-fg" />
                       Option Analysis & Explanation
                     </span>
                     {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
                   </button>
 
                   {isExpanded && (
-                    <div className="mt-2 space-y-2 text-sm text-[#D1D5DB] leading-relaxed">
+                    <div className="mt-2 space-y-2 text-sm text-fg leading-relaxed">
                       {option.explanation && (
-                        <p className="bg-[#161922] p-3 rounded-lg border border-[#1F2430]">
+                        <p className="bg-elevated p-3 rounded-lg border border-line">
                           {option.explanation}
                         </p>
                       )}
@@ -255,14 +255,14 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                       {/* Official Reference Documentation Links */}
                       {option.references && option.references.length > 0 && (
                         <div className="pt-1 flex flex-wrap items-center gap-1.5">
-                          <span className="text-[11px] font-medium text-[#9CA3AF]">References:</span>
+                          <span className="text-[11px] font-medium text-fg-muted">References:</span>
                           {option.references.map((ref, rIdx) => (
                             <a
                               key={rIdx}
                               href={ref.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-[#C5A059]/10 text-[#DFB76C] border border-[#C5A059]/30 text-[11px] hover:underline"
+                              className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-md bg-accent/10 text-accent-fg-strong border border-accent/30 text-[11px] hover:underline"
                             >
                               <span>{ref.title || 'Documentation'}</span>
                               <ExternalLink className="w-2.5 h-2.5" />
@@ -281,12 +281,12 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* Global Question Explanation (if provided on question level) */}
       {mode === 'practice' && isChecked && question.explanation && (
-        <div className="mb-6 p-4 rounded-xl bg-[#161922] border border-[#1F2430]">
-          <div className="flex items-center gap-2 mb-1.5 font-semibold text-xs text-[#DFB76C]">
-            <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+        <div className="mb-6 p-4 rounded-xl bg-elevated border border-line">
+          <div className="flex items-center gap-2 mb-1.5 font-semibold text-xs text-accent-fg-strong">
+            <Sparkles className="w-3.5 h-3.5 text-accent-fg" />
             <span>General Overview</span>
           </div>
-          <p className="text-sm sm:text-base text-[#D1D5DB] leading-relaxed">
+          <p className="text-sm sm:text-base text-fg leading-relaxed">
             {question.explanation}
           </p>
         </div>
@@ -294,29 +294,29 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
       {/* Instant Feedback Result Banner & Action Bar in Practice Mode */}
       {mode === 'practice' && (
-        <div className="pt-3 border-t border-[#1F2430] flex flex-wrap items-center justify-between gap-3">
+        <div className="pt-3 border-t border-line flex flex-wrap items-center justify-between gap-3">
           {isChecked ? (
             <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
               <div className={`flex items-center gap-2 px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm ${
                 isAllCorrect 
-                  ? 'bg-emerald-950/60 text-emerald-300 border border-emerald-700/60' 
+                  ? 'bg-emerald-50 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-700/60' 
                   : isPartiallyCorrect
-                  ? 'bg-amber-950/60 text-amber-300 border border-amber-700/60'
-                  : 'bg-rose-950/60 text-rose-300 border border-rose-700/60'
+                  ? 'bg-amber-50 dark:bg-amber-950/60 text-amber-700 dark:text-amber-300 border border-amber-300 dark:border-amber-700/60'
+                  : 'bg-rose-50 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-300 dark:border-rose-700/60'
               }`}>
                 {isAllCorrect ? (
                   <>
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-700 dark:text-emerald-400" />
                     <span>Correct! Excellent precision.</span>
                   </>
                 ) : isPartiallyCorrect ? (
                   <>
-                    <HelpCircle className="w-4 h-4 text-amber-400" />
+                    <HelpCircle className="w-4 h-4 text-amber-700 dark:text-amber-400" />
                     <span>Partially Correct ({selectedAnswers.filter(a => question.correctAnswers.includes(a)).length}/{question.correctAnswers.length})</span>
                   </>
                 ) : (
                   <>
-                    <XCircle className="w-4 h-4 text-rose-400" />
+                    <XCircle className="w-4 h-4 text-rose-700 dark:text-rose-400" />
                     <span>Incorrect. Review analysis above.</span>
                   </>
                 )}
@@ -325,7 +325,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
               <button
                 id={`retry-question-btn-${currentIndex + 1}`}
                 onClick={onResetQuestion}
-                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-[#1F2430] bg-[#161922] text-[#D1D5DB] hover:border-[#C5A059]/40 hover:bg-[#1A1E2A] text-xs font-semibold transition"
+                className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-line bg-elevated text-fg hover:border-accent/40 hover:bg-elevated-hover text-xs font-semibold transition"
               >
                 <RotateCcw className="w-3.5 h-3.5" />
                 <span>Try Again</span>
@@ -333,7 +333,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
             </div>
           ) : (
             <div className="flex items-center justify-between w-full">
-              <span className="text-xs text-[#9CA3AF]">
+              <span className="text-xs text-fg-muted">
                 {isMulti 
                   ? `Select ${question.requiredSelectCount} options, then check feedback`
                   : 'Select an option to view instant feedback'}
@@ -343,7 +343,7 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
                 id={`check-answer-btn-${currentIndex + 1}`}
                 onClick={onCheckAnswer}
                 disabled={selectedAnswers.length === 0}
-                className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-[#C5A059] hover:bg-[#DFB76C] disabled:opacity-40 disabled:pointer-events-none text-[#0A0B0E] text-xs font-bold shadow-lg shadow-[#C5A059]/20 transition active:scale-95 cursor-pointer"
+                className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-accent hover:bg-accent-hover disabled:opacity-40 disabled:pointer-events-none text-on-accent text-xs font-bold shadow-lg shadow-accent/20 transition active:scale-95 cursor-pointer"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Check Answer</span>

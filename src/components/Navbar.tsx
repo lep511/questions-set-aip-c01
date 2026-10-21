@@ -66,34 +66,34 @@ export const Navbar: React.FC<NavbarProps> = ({
   };
 
   return (
-    <header className="sticky top-0 z-30 w-full border-b border-[#1F2430] bg-[#0A0B0E]/90 backdrop-blur-md transition-colors">
+    <header className="sticky top-0 z-30 w-full border-b border-line bg-canvas/90 backdrop-blur-md transition-colors">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3 flex flex-wrap items-center justify-between gap-2 sm:gap-4">
         
         {/* Left: Brand & Mode Pills */}
         <div className="flex items-center gap-2 sm:gap-4">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-[#C5A059] flex items-center justify-center text-[#0A0B0E] font-black text-lg shadow-sm shadow-[#C5A059]/30">
+            <div className="w-8 h-8 sm:w-9 sm:h-9 rounded-xl bg-accent flex items-center justify-center text-on-accent font-black text-lg shadow-sm shadow-accent/30">
               Q
             </div>
             <div>
-              <h1 className="text-sm sm:text-base font-bold text-[#F3F4F6] tracking-tight leading-tight">
+              <h1 className="text-sm sm:text-base font-bold text-fg-strong tracking-tight leading-tight">
                 Exam Simulator
               </h1>
-              <p className="text-[11px] text-[#9CA3AF] hidden sm:block">
+              <p className="text-[11px] text-fg-muted hidden sm:block">
                 Instant Feedback & Test Prep
               </p>
             </div>
           </div>
 
           {/* Mode Switcher Buttons */}
-          <div className="flex items-center p-0.5 rounded-xl bg-[#12141A] border border-[#1F2430]">
+          <div className="flex items-center p-0.5 rounded-xl bg-surface border border-line">
             <button
               id="mode-practice-btn"
               onClick={() => setMode('practice')}
               className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 mode === 'practice'
-                  ? 'bg-[#C5A059] text-[#0A0B0E] font-bold shadow-xs'
-                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+                  ? 'bg-accent text-on-accent font-bold shadow-xs'
+                  : 'text-fg-muted hover:text-fg-bright'
               }`}
               title="Practice mode provides instant feedback after each answer"
             >
@@ -106,8 +106,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setMode('exam')}
               className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 mode === 'exam'
-                  ? 'bg-[#C5A059] text-[#0A0B0E] font-bold shadow-xs'
-                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+                  ? 'bg-accent text-on-accent font-bold shadow-xs'
+                  : 'text-fg-muted hover:text-fg-bright'
               }`}
               title="Timed exam mode with score breakdown upon submission"
             >
@@ -120,8 +120,8 @@ export const Navbar: React.FC<NavbarProps> = ({
               onClick={() => setMode('flashcard')}
               className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 mode === 'flashcard'
-                  ? 'bg-[#C5A059] text-[#0A0B0E] font-bold shadow-xs'
-                  : 'text-[#9CA3AF] hover:text-[#E5E7EB]'
+                  ? 'bg-accent text-on-accent font-bold shadow-xs'
+                  : 'text-fg-muted hover:text-fg-bright'
               }`}
               title="Flashcard study mode for memorization"
             >
@@ -134,8 +134,8 @@ export const Navbar: React.FC<NavbarProps> = ({
         {/* Center / Right: Timer (if in exam) + Actions */}
         <div className="flex items-center gap-1.5 sm:gap-2">
           {mode === 'exam' && !isExamSubmitted && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#C5A059]/10 border border-[#C5A059]/30 text-[#DFB76C] font-mono text-xs font-semibold">
-              <Clock className="w-3.5 h-3.5 animate-pulse text-[#C5A059]" />
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-accent/10 border border-accent/30 text-accent-fg-strong font-mono text-xs font-semibold">
+              <Clock className="w-3.5 h-3.5 animate-pulse text-accent-fg" />
               <span>{formatTime(timeRemainingSeconds)}</span>
             </div>
           )}
@@ -144,12 +144,12 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="open-question-matrix-btn"
             onClick={onOpenDrawer}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-[#1F2430] bg-[#12141A] text-[#D1D5DB] hover:border-[#C5A059]/50 hover:bg-[#181B23] text-xs font-medium transition"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-line bg-surface text-fg hover:border-accent/50 hover:bg-surface-hover text-xs font-medium transition"
             title="Open Question Navigator Matrix"
           >
-            <ListOrdered className="w-3.5 h-3.5 text-[#C5A059]" />
+            <ListOrdered className="w-3.5 h-3.5 text-accent-fg" />
             <span className="hidden md:inline">Questions</span>
-            <span className="px-1.5 py-0.2 rounded-md bg-[#1F2430] text-[10px] text-[#DFB76C] font-mono font-bold">
+            <span className="px-1.5 py-0.2 rounded-md bg-line text-[10px] text-accent-fg-strong font-mono font-bold">
               {totalQuestions}
             </span>
           </button>
@@ -161,16 +161,16 @@ export const Navbar: React.FC<NavbarProps> = ({
                 id="question-set-selector"
                 value={currentSetId}
                 onChange={(e) => onSelectSet(e.target.value)}
-                className="appearance-none flex items-center gap-1.5 pl-8 pr-3 py-1.5 rounded-xl border border-[#C5A059]/40 bg-[#12141A] text-[#DFB76C] hover:bg-[#181B23] text-xs font-semibold transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#C5A059]/50"
+                className="appearance-none flex items-center gap-1.5 pl-8 pr-3 py-1.5 rounded-xl border border-accent/40 bg-surface text-accent-fg-strong hover:bg-surface-hover text-xs font-semibold transition cursor-pointer focus:outline-none focus:ring-2 focus:ring-accent/50"
                 title="Select question set"
               >
                 {availableSets.map((set) => (
-                  <option key={set.id} value={set.id} className="bg-[#12141A] text-[#DFB76C]">
+                  <option key={set.id} value={set.id} className="bg-surface text-accent-fg-strong">
                     {set.name} ({set.questionCount}Q)
                   </option>
                 ))}
               </select>
-              <Layers className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#C5A059] pointer-events-none" />
+              <Layers className="absolute left-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-accent-fg pointer-events-none" />
             </div>
           )}
 
@@ -179,10 +179,10 @@ export const Navbar: React.FC<NavbarProps> = ({
             <button
               id="open-setup-btn"
               onClick={onOpenSetup}
-              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-[#C5A059]/40 bg-[#C5A059]/10 text-[#DFB76C] hover:bg-[#C5A059]/20 text-xs font-semibold transition cursor-pointer"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-accent/40 bg-accent/10 text-accent-fg-strong hover:bg-accent/20 text-xs font-semibold transition cursor-pointer"
               title="Change number of questions (5, 10, 20, All)"
             >
-              <Sparkles className="w-3.5 h-3.5 text-[#C5A059]" />
+              <Sparkles className="w-3.5 h-3.5 text-accent-fg" />
               <span className="hidden sm:inline">Count / Setup</span>
             </button>
           )}
@@ -191,10 +191,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="import-json-btn"
             onClick={onOpenImport}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#C5A059]/10 border border-[#C5A059]/30 text-[#DFB76C] hover:bg-[#C5A059]/20 text-xs font-semibold transition"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-accent/10 border border-accent/30 text-accent-fg-strong hover:bg-accent/20 text-xs font-semibold transition"
             title="Import or paste custom JSON file"
           >
-            <Upload className="w-3.5 h-3.5 text-[#C5A059]" />
+            <Upload className="w-3.5 h-3.5 text-accent-fg" />
             <span className="hidden sm:inline">JSON Files</span>
           </button>
 
@@ -202,10 +202,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="remix-questions-btn"
             onClick={onRemixQuestions}
-            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-[#1F2430] bg-[#12141A] text-[#D1D5DB] hover:border-[#C5A059]/50 hover:text-[#DFB76C] hover:bg-[#181B23] text-xs font-medium transition cursor-pointer"
+            className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl border border-line bg-surface text-fg hover:border-accent/50 hover:text-accent-fg-strong hover:bg-surface-hover text-xs font-medium transition cursor-pointer"
             title="Remix & Shuffle questions into random order"
           >
-            <Shuffle className="w-3.5 h-3.5 text-[#C5A059]" />
+            <Shuffle className="w-3.5 h-3.5 text-accent-fg" />
             <span className="hidden lg:inline">Remix</span>
           </button>
 
@@ -213,10 +213,10 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="toggle-font-scale-btn"
             onClick={onChangeTextScale}
-            className="p-1.5 rounded-xl border border-[#1F2430] bg-[#12141A] text-[#D1D5DB] hover:border-[#C5A059]/50 hover:bg-[#181B23] transition"
+            className="p-1.5 rounded-xl border border-line bg-surface text-fg hover:border-accent/50 hover:bg-surface-hover transition"
             title={`Font size: ${textScale.toUpperCase()} (Click to change)`}
           >
-            <div className="flex items-center justify-center w-4 h-4 text-xs font-bold font-mono text-[#DFB76C]">
+            <div className="flex items-center justify-center w-4 h-4 text-xs font-bold font-mono text-accent-fg-strong">
               {textScale === 'sm' ? 'A-' : textScale === 'lg' ? 'A+' : 'A'}
             </div>
           </button>
@@ -225,27 +225,28 @@ export const Navbar: React.FC<NavbarProps> = ({
           <button
             id="toggle-sound-btn"
             onClick={onToggleMute}
-            className="p-1.5 rounded-xl border border-[#1F2430] bg-[#12141A] text-[#D1D5DB] hover:border-[#C5A059]/50 hover:bg-[#181B23] transition"
+            className="p-1.5 rounded-xl border border-line bg-surface text-fg hover:border-accent/50 hover:bg-surface-hover transition"
             title={isMuted ? 'Unmute feedback sound' : 'Mute feedback sound'}
           >
-            {isMuted ? <VolumeX className="w-4 h-4 text-[#6B7280]" /> : <Volume2 className="w-4 h-4 text-[#C5A059]" />}
+            {isMuted ? <VolumeX className="w-4 h-4 text-fg-subtle" /> : <Volume2 className="w-4 h-4 text-accent-fg" />}
           </button>
 
           {/* Dark / Light toggle */}
           <button
             id="toggle-theme-btn"
             onClick={onToggleTheme}
-            className="p-1.5 rounded-xl border border-[#1F2430] bg-[#12141A] text-[#D1D5DB] hover:border-[#C5A059]/50 hover:bg-[#181B23] transition"
+            className="p-1.5 rounded-xl border border-line bg-surface text-fg hover:border-accent/50 hover:bg-surface-hover transition"
             title="Toggle theme"
+            aria-label={isDark ? 'Switch to light theme' : 'Switch to dark theme'}
           >
-            {isDark ? <Sun className="w-4 h-4 text-[#C5A059]" /> : <Moon className="w-4 h-4 text-[#9CA3AF]" />}
+            {isDark ? <Sun className="w-4 h-4 text-accent-fg" /> : <Moon className="w-4 h-4 text-fg-muted" />}
           </button>
 
           {/* Reset button */}
           <button
             id="reset-exam-btn"
             onClick={onResetExam}
-            className="p-1.5 rounded-xl border border-[#1F2430] bg-[#12141A] text-[#9CA3AF] hover:text-[#F3F4F6] hover:border-[#C5A059]/50 hover:bg-[#181B23] transition"
+            className="p-1.5 rounded-xl border border-line bg-surface text-fg-muted hover:text-fg-strong hover:border-accent/50 hover:bg-surface-hover transition"
             title="Reset answers and restart"
           >
             <RotateCcw className="w-4 h-4" />

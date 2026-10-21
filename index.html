@@ -5,11 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Exam Simulator — Sophisticated Dark</title>
     <meta name="description" content="Mobile and desktop exam simulator with instant feedback and custom JSON loader in Sophisticated Dark aesthetic." />
+    <script>
+      // Apply saved theme (or OS preference) before first paint to avoid a flash of the wrong theme
+      (function () {
+        var isDark = true;
+        try {
+          var saved = localStorage.getItem('theme');
+          isDark = saved === 'dark' || saved === 'light'
+            ? saved === 'dark'
+            : window.matchMedia('(prefers-color-scheme: dark)').matches;
+        } catch (e) {}
+        document.documentElement.classList.toggle('dark', isDark);
+        document.documentElement.style.colorScheme = isDark ? 'dark' : 'light';
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-[#0A0B0E] text-[#D1D5DB] antialiased selection:bg-[#C5A059]/30 selection:text-[#DFB76C]">
+  <body class="bg-canvas text-fg antialiased selection:bg-accent/30 selection:text-accent-fg-strong">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

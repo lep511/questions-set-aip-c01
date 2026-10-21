@@ -131,16 +131,16 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-xs animate-in fade-in">
-      <div className="w-full max-w-2xl bg-[#12141A] border border-[#1F2430] rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-[#D1D5DB]">
+      <div className="w-full max-w-2xl bg-surface border border-line rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh] text-fg">
         
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-[#1F2430] flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-b border-line flex items-center justify-between">
           <div>
-            <h3 className="font-bold text-base sm:text-lg text-[#F3F4F6] flex items-center gap-2">
-              <FileCode className="w-5 h-5 text-[#C5A059]" />
+            <h3 className="font-bold text-base sm:text-lg text-fg-strong flex items-center gap-2">
+              <FileCode className="w-5 h-5 text-accent-fg" />
               <span>Load JSON Exam Files</span>
             </h3>
-            <p className="text-xs text-[#9CA3AF]">
+            <p className="text-xs text-fg-muted">
               Upload custom question banks or select from curated presets
             </p>
           </div>
@@ -148,21 +148,21 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
           <button
             id="close-import-modal-btn"
             onClick={onClose}
-            className="p-1.5 rounded-lg text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#161922] transition cursor-pointer"
+            className="p-1.5 rounded-lg text-fg-muted hover:text-fg-strong hover:bg-elevated transition cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Tab Buttons */}
-        <div className="px-4 pt-3 border-b border-[#1F2430] flex items-center gap-2">
+        <div className="px-4 pt-3 border-b border-line flex items-center gap-2">
           <button
             id="tab-upload-btn"
             onClick={() => { setActiveTab('upload'); setErrorMessage(null); }}
             className={`px-3.5 py-2 text-xs font-semibold border-b-2 transition cursor-pointer ${
               activeTab === 'upload'
-                ? 'border-[#C5A059] text-[#DFB76C]'
-                : 'border-transparent text-[#9CA3AF] hover:text-[#F3F4F6]'
+                ? 'border-accent text-accent-fg-strong'
+                : 'border-transparent text-fg-muted hover:text-fg-strong'
             }`}
           >
             <span className="flex items-center gap-1.5">
@@ -176,8 +176,8 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
             onClick={() => { setActiveTab('paste'); setErrorMessage(null); }}
             className={`px-3.5 py-2 text-xs font-semibold border-b-2 transition cursor-pointer ${
               activeTab === 'paste'
-                ? 'border-[#C5A059] text-[#DFB76C]'
-                : 'border-transparent text-[#9CA3AF] hover:text-[#F3F4F6]'
+                ? 'border-accent text-accent-fg-strong'
+                : 'border-transparent text-fg-muted hover:text-fg-strong'
             }`}
           >
             <span className="flex items-center gap-1.5">
@@ -191,8 +191,8 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
             onClick={() => { setActiveTab('presets'); setErrorMessage(null); }}
             className={`px-3.5 py-2 text-xs font-semibold border-b-2 transition cursor-pointer ${
               activeTab === 'presets'
-                ? 'border-[#C5A059] text-[#DFB76C]'
-                : 'border-transparent text-[#9CA3AF] hover:text-[#F3F4F6]'
+                ? 'border-accent text-accent-fg-strong'
+                : 'border-transparent text-fg-muted hover:text-fg-strong'
             }`}
           >
             <span className="flex items-center gap-1.5">
@@ -207,7 +207,7 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
           
           {/* Alerts */}
           {errorMessage && (
-            <div className="p-3 rounded-xl bg-rose-950/40 border border-rose-800 text-rose-300 text-xs flex items-start gap-2">
+            <div className="p-3 rounded-xl bg-rose-50 dark:bg-rose-950/40 border border-rose-300 dark:border-rose-800 text-rose-700 dark:text-rose-300 text-xs flex items-start gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
               <div>
                 <p className="font-semibold">Error loading JSON</p>
@@ -217,7 +217,7 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
           )}
 
           {successMessage && (
-            <div className="p-3 rounded-xl bg-emerald-950/40 border border-emerald-800 text-emerald-300 text-xs flex items-center gap-2">
+            <div className="p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800 text-emerald-700 dark:text-emerald-300 text-xs flex items-center gap-2">
               <CheckCircle2 className="w-4 h-4 shrink-0" />
               <p className="font-semibold">{successMessage}</p>
             </div>
@@ -245,28 +245,28 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
                 onClick={() => fileInputRef.current?.click()}
                 className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center gap-3 ${
                   isDragging
-                    ? 'border-[#C5A059] bg-[#C5A059]/10'
-                    : 'border-[#1F2430] hover:border-[#C5A059]/50 bg-[#161922]/50'
+                    ? 'border-accent bg-accent/10'
+                    : 'border-line hover:border-accent/50 bg-elevated/50'
                 }`}
               >
-                <div className="w-12 h-12 rounded-xl bg-[#C5A059]/15 text-[#DFB76C] flex items-center justify-center">
+                <div className="w-12 h-12 rounded-xl bg-accent/15 text-accent-fg-strong flex items-center justify-center">
                   <Upload className="w-6 h-6" />
                 </div>
                 <div>
-                  <p className="text-sm font-bold text-[#F3F4F6]">
+                  <p className="text-sm font-bold text-fg-strong">
                     Click to browse or drag and drop your .json file here
                   </p>
-                  <p className="text-xs text-[#9CA3AF] mt-1">
+                  <p className="text-xs text-fg-muted mt-1">
                     Supports exams with single & multiple choice, option explanations, and documentation links.
                   </p>
                 </div>
               </div>
 
               <div className="flex items-center justify-between pt-2">
-                <span className="text-xs text-[#9CA3AF]">Need the schema reference?</span>
+                <span className="text-xs text-fg-muted">Need the schema reference?</span>
                 <button
                   onClick={handleDownloadSample}
-                  className="text-xs text-[#DFB76C] hover:underline flex items-center gap-1 font-medium cursor-pointer"
+                  className="text-xs text-accent-fg-strong hover:underline flex items-center gap-1 font-medium cursor-pointer"
                 >
                   <Download className="w-3.5 h-3.5" />
                   Download Sample Schema .json
@@ -279,7 +279,7 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
           {activeTab === 'paste' && (
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#D1D5DB] mb-1">
+                <label className="block text-xs font-semibold text-fg mb-1">
                   Paste JSON Array:
                 </label>
                 <textarea
@@ -288,7 +288,7 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
                   value={jsonText}
                   onChange={(e) => setJsonText(e.target.value)}
                   placeholder={`[\n  {\n    "question": "Sample Question...",\n    "options": [\n      { "id": "A", "text": "Option 1", "explanation": "Why this is right/wrong" },\n      { "id": "B", "text": "Option 2" }\n    ],\n    "correct_answer": "A"\n  }\n]`}
-                  className="w-full font-mono text-xs p-3 rounded-xl border border-[#1F2430] bg-[#0E1015] text-[#F3F4F6] focus:outline-hidden focus:ring-1 focus:ring-[#C5A059]"
+                  className="w-full font-mono text-xs p-3 rounded-xl border border-line bg-inset text-fg-strong focus:outline-hidden focus:ring-1 focus:ring-accent"
                 />
               </div>
 
@@ -296,7 +296,7 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
                 <button
                   id="submit-pasted-json-btn"
                   onClick={handlePasteSubmit}
-                  className="px-5 py-2.5 rounded-xl bg-[#C5A059] hover:bg-[#DFB76C] text-[#0A0B0E] text-xs font-bold shadow-lg shadow-[#C5A059]/20 transition cursor-pointer"
+                  className="px-5 py-2.5 rounded-xl bg-accent hover:bg-accent-hover text-on-accent text-xs font-bold shadow-lg shadow-accent/20 transition cursor-pointer"
                 >
                   Parse & Load Exam
                 </button>
@@ -309,60 +309,60 @@ export const JsonImportModal: React.FC<JsonImportModalProps> = ({
             <div className="space-y-3">
               <div 
                 onClick={() => processJsonData(JSON.stringify(DEFAULT_AWS_EXAM_JSON), "AWS GenAI Certification Set")}
-                className="p-4 rounded-xl border border-[#1F2430] bg-[#161922] hover:border-[#C5A059]/50 cursor-pointer transition flex items-center justify-between gap-3"
+                className="p-4 rounded-xl border border-line bg-elevated hover:border-accent/50 cursor-pointer transition flex items-center justify-between gap-3"
               >
                 <div>
-                  <h4 className="font-bold text-sm text-[#F3F4F6] flex items-center gap-2">
+                  <h4 className="font-bold text-sm text-fg-strong flex items-center gap-2">
                     <span>AWS Certified Generative AI Exam</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#C5A059]/20 text-[#DFB76C] text-[10px] font-mono">
+                    <span className="px-2 py-0.5 rounded-full bg-accent/20 text-accent-fg-strong text-[10px] font-mono">
                       {DEFAULT_AWS_EXAM_JSON.length} Questions
                     </span>
                   </h4>
-                  <p className="text-xs text-[#9CA3AF] mt-1">
+                  <p className="text-xs text-fg-muted mt-1">
                     Bedrock, OpenSearch, RAG reranking, KMS security, Multimodal Converse API, Prompt Management, Agent Memory, Model Distillation, and Guardrails.
                   </p>
                 </div>
-                <button className="shrink-0 px-3.5 py-1.5 rounded-lg bg-[#C5A059] text-[#0A0B0E] text-xs font-bold shadow-xs">
+                <button className="shrink-0 px-3.5 py-1.5 rounded-lg bg-accent text-on-accent text-xs font-bold shadow-xs">
                   Load
                 </button>
               </div>
 
               <div 
                 onClick={() => processJsonData(JSON.stringify(SAMPLE_ML_EXAM_JSON), "Machine Learning Core Concepts")}
-                className="p-4 rounded-xl border border-[#1F2430] bg-[#161922] hover:border-[#C5A059]/50 cursor-pointer transition flex items-center justify-between gap-3"
+                className="p-4 rounded-xl border border-line bg-elevated hover:border-accent/50 cursor-pointer transition flex items-center justify-between gap-3"
               >
                 <div>
-                  <h4 className="font-bold text-sm text-[#F3F4F6] flex items-center gap-2">
+                  <h4 className="font-bold text-sm text-fg-strong flex items-center gap-2">
                     <span>Machine Learning Fundamentals</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#1F2430] text-[#D1D5DB] text-[10px] font-mono">
+                    <span className="px-2 py-0.5 rounded-full bg-line text-fg text-[10px] font-mono">
                       Sample
                     </span>
                   </h4>
-                  <p className="text-xs text-[#9CA3AF] mt-1">
+                  <p className="text-xs text-fg-muted mt-1">
                     Activation functions, regularization, overfitting mitigation, and training techniques.
                   </p>
                 </div>
-                <button className="shrink-0 px-3.5 py-1.5 rounded-lg bg-[#1F2430] hover:bg-[#2A3244] text-[#D1D5DB] text-xs font-semibold">
+                <button className="shrink-0 px-3.5 py-1.5 rounded-lg bg-line hover:bg-line-strong text-fg text-xs font-semibold">
                   Load
                 </button>
               </div>
 
               <div 
                 onClick={() => processJsonData(JSON.stringify(SAMPLE_WEB_EXAM_JSON), "Frontend & React Deep Dive")}
-                className="p-4 rounded-xl border border-[#1F2430] bg-[#161922] hover:border-[#C5A059]/50 cursor-pointer transition flex items-center justify-between gap-3"
+                className="p-4 rounded-xl border border-line bg-elevated hover:border-accent/50 cursor-pointer transition flex items-center justify-between gap-3"
               >
                 <div>
-                  <h4 className="font-bold text-sm text-[#F3F4F6] flex items-center gap-2">
+                  <h4 className="font-bold text-sm text-fg-strong flex items-center gap-2">
                     <span>Frontend & React Concepts</span>
-                    <span className="px-2 py-0.5 rounded-full bg-[#1F2430] text-[#D1D5DB] text-[10px] font-mono">
+                    <span className="px-2 py-0.5 rounded-full bg-line text-fg text-[10px] font-mono">
                       Sample
                     </span>
                   </h4>
-                  <p className="text-xs text-[#9CA3AF] mt-1">
+                  <p className="text-xs text-fg-muted mt-1">
                     React performance hooks, state management, and modern component patterns.
                   </p>
                 </div>
-                <button className="shrink-0 px-3.5 py-1.5 rounded-lg bg-[#1F2430] hover:bg-[#2A3244] text-[#D1D5DB] text-xs font-semibold">
+                <button className="shrink-0 px-3.5 py-1.5 rounded-lg bg-line hover:bg-line-strong text-fg text-xs font-semibold">
                   Load
                 </button>
               </div>

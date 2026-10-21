@@ -120,12 +120,12 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
       {/* Primary Score Hero Card */}
       <div className={`p-6 sm:p-8 rounded-3xl border text-center transition-all ${
         isPassed
-          ? 'bg-gradient-to-b from-[#C5A059]/15 to-[#12141A] border-[#C5A059]/40 shadow-xl'
-          : 'bg-gradient-to-b from-rose-950/20 to-[#12141A] border-rose-900/40 shadow-xl'
+          ? 'bg-gradient-to-b from-accent/15 to-surface border-accent/40 shadow-xl'
+          : 'bg-gradient-to-b from-rose-50 dark:from-rose-950/20 to-surface border-rose-300 dark:border-rose-900/40 shadow-xl'
       }`}>
         <div className="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 rounded-2xl mb-4 shadow-lg">
           {isPassed ? (
-            <div className="w-full h-full rounded-2xl bg-[#C5A059] text-[#0A0B0E] flex items-center justify-center shadow-lg shadow-[#C5A059]/30">
+            <div className="w-full h-full rounded-2xl bg-accent text-on-accent flex items-center justify-center shadow-lg shadow-accent/30">
               <Trophy className="w-8 h-8 sm:w-10 sm:h-10" />
             </div>
           ) : (
@@ -135,10 +135,10 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
           )}
         </div>
 
-        <h2 className="text-2xl sm:text-3xl font-bold text-[#F3F4F6] mb-1">
+        <h2 className="text-2xl sm:text-3xl font-bold text-fg-strong mb-1">
           {isPassed ? 'Exam Passed! 🎉' : 'Keep Practicing! 💪'}
         </h2>
-        <p className="text-sm text-[#9CA3AF] mb-6 max-w-md mx-auto">
+        <p className="text-sm text-fg-muted mb-6 max-w-md mx-auto">
           {isPassed 
             ? 'Commendable result! You met the 70% passing requirement.' 
             : 'You scored below the 70% threshold. Review your answers and explanations below.'}
@@ -148,11 +148,11 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
         <div className="flex items-center justify-center gap-6 mb-6">
           <div className="text-center">
             <span className={`text-5xl sm:text-7xl font-mono font-black ${
-              isPassed ? 'text-[#DFB76C]' : 'text-rose-400'
+              isPassed ? 'text-accent-fg-strong' : 'text-rose-700 dark:text-rose-400'
             }`}>
               {scorePercent}%
             </span>
-            <p className="text-xs font-semibold uppercase tracking-widest text-[#9CA3AF] mt-1">
+            <p className="text-xs font-semibold uppercase tracking-widest text-fg-muted mt-1">
               Final Score
             </p>
           </div>
@@ -160,42 +160,42 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
 
         {/* Quick Stats Grid */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-xl mx-auto mb-6">
-          <div className="p-3.5 rounded-xl bg-[#161922] border border-[#1F2430]">
-            <div className="flex items-center justify-center gap-1.5 text-emerald-400 text-xs font-semibold mb-1">
+          <div className="p-3.5 rounded-xl bg-elevated border border-line">
+            <div className="flex items-center justify-center gap-1.5 text-emerald-700 dark:text-emerald-400 text-xs font-semibold mb-1">
               <CheckCircle2 className="w-3.5 h-3.5" />
               <span>Correct</span>
             </div>
-            <p className="text-lg sm:text-xl font-mono font-bold text-[#F3F4F6]">
+            <p className="text-lg sm:text-xl font-mono font-bold text-fg-strong">
               {correctCount} / {total}
             </p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#161922] border border-[#1F2430]">
-            <div className="flex items-center justify-center gap-1.5 text-rose-400 text-xs font-semibold mb-1">
+          <div className="p-3.5 rounded-xl bg-elevated border border-line">
+            <div className="flex items-center justify-center gap-1.5 text-rose-700 dark:text-rose-400 text-xs font-semibold mb-1">
               <XCircle className="w-3.5 h-3.5" />
               <span>Incorrect</span>
             </div>
-            <p className="text-lg sm:text-xl font-mono font-bold text-[#F3F4F6]">
+            <p className="text-lg sm:text-xl font-mono font-bold text-fg-strong">
               {incorrectCount}
             </p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#161922] border border-[#1F2430]">
-            <div className="flex items-center justify-center gap-1.5 text-[#9CA3AF] text-xs font-semibold mb-1">
+          <div className="p-3.5 rounded-xl bg-elevated border border-line">
+            <div className="flex items-center justify-center gap-1.5 text-fg-muted text-xs font-semibold mb-1">
               <FileText className="w-3.5 h-3.5" />
               <span>Unanswered</span>
             </div>
-            <p className="text-lg sm:text-xl font-mono font-bold text-[#F3F4F6]">
+            <p className="text-lg sm:text-xl font-mono font-bold text-fg-strong">
               {unansweredCount}
             </p>
           </div>
 
-          <div className="p-3.5 rounded-xl bg-[#161922] border border-[#1F2430]">
-            <div className="flex items-center justify-center gap-1.5 text-[#DFB76C] text-xs font-semibold mb-1">
-              <Clock className="w-3.5 h-3.5 text-[#C5A059]" />
+          <div className="p-3.5 rounded-xl bg-elevated border border-line">
+            <div className="flex items-center justify-center gap-1.5 text-accent-fg-strong text-xs font-semibold mb-1">
+              <Clock className="w-3.5 h-3.5 text-accent-fg" />
               <span>Time Spent</span>
             </div>
-            <p className="text-lg sm:text-xl font-mono font-bold text-[#F3F4F6]">
+            <p className="text-lg sm:text-xl font-mono font-bold text-fg-strong">
               {formatTime(timeSpentSeconds)}
             </p>
           </div>
@@ -206,7 +206,7 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
           <button
             id="report-review-all-btn"
             onClick={() => onReviewQuestion(0)}
-            className="px-5 py-2.5 rounded-xl bg-[#C5A059] hover:bg-[#DFB76C] text-[#0A0B0E] font-bold text-xs sm:text-sm shadow-lg shadow-[#C5A059]/20 transition flex items-center gap-2 cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-accent hover:bg-accent-hover text-on-accent font-bold text-xs sm:text-sm shadow-lg shadow-accent/20 transition flex items-center gap-2 cursor-pointer"
           >
             <Sparkles className="w-4 h-4" />
             <span>Review Full Explanations</span>
@@ -216,7 +216,7 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
             <button
               id="report-retake-missed-btn"
               onClick={onRetakeMissed}
-              className="px-4 py-2.5 rounded-xl bg-[#1A1E2A] hover:bg-[#222838] text-[#DFB76C] border border-[#C5A059]/40 font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-2 cursor-pointer"
+              className="px-4 py-2.5 rounded-xl bg-elevated-hover hover:bg-elevated-active text-accent-fg-strong border border-accent/40 font-bold text-xs sm:text-sm shadow-sm transition flex items-center gap-2 cursor-pointer"
             >
               <RotateCcw className="w-4 h-4" />
               <span>Retake Missed ({incorrectCount})</span>
@@ -226,7 +226,7 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
           <button
             id="report-restart-exam-btn"
             onClick={onRetakeExam}
-            className="px-4 py-2.5 rounded-xl border border-[#1F2430] bg-[#161922] text-[#D1D5DB] hover:border-[#C5A059]/40 hover:bg-[#1A1E2A] text-xs sm:text-sm font-semibold transition flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-line bg-elevated text-fg hover:border-accent/40 hover:bg-elevated-hover text-xs sm:text-sm font-semibold transition flex items-center gap-2 cursor-pointer"
           >
             <RotateCcw className="w-4 h-4" />
             <span>Restart Exam</span>
@@ -235,7 +235,7 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
           <button
             id="report-export-json-btn"
             onClick={handleExportJSON}
-            className="px-4 py-2.5 rounded-xl border border-[#1F2430] bg-[#161922] text-[#D1D5DB] hover:border-[#C5A059]/40 hover:bg-[#1A1E2A] text-xs sm:text-sm font-semibold transition flex items-center gap-2 cursor-pointer"
+            className="px-4 py-2.5 rounded-xl border border-line bg-elevated text-fg hover:border-accent/40 hover:bg-elevated-hover text-xs sm:text-sm font-semibold transition flex items-center gap-2 cursor-pointer"
           >
             <Download className="w-4 h-4" />
             <span>Export Report</span>
@@ -245,8 +245,8 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
       </div>
 
       {/* Detailed Question Review List */}
-      <div className="bg-[#12141A] border border-[#1F2430] rounded-2xl p-4 sm:p-6 shadow-xl">
-        <h3 className="text-base font-bold text-[#F3F4F6] mb-4">
+      <div className="bg-surface border border-line rounded-2xl p-4 sm:p-6 shadow-xl">
+        <h3 className="text-base font-bold text-fg-strong mb-4">
           Question Breakdown & Results
         </h3>
 
@@ -256,33 +256,33 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
               key={r.question.id}
               className={`p-3.5 sm:p-4 rounded-xl border flex flex-wrap items-center justify-between gap-3 transition ${
                 r.isCorrect
-                  ? 'border-emerald-900/60 bg-emerald-950/20'
+                  ? 'border-emerald-300 dark:border-emerald-900/60 bg-emerald-50 dark:bg-emerald-950/20'
                   : !r.isAnswered
-                  ? 'border-[#1F2430] bg-[#161922]/50'
-                  : 'border-rose-900/60 bg-rose-950/20'
+                  ? 'border-line bg-elevated/50'
+                  : 'border-rose-300 dark:border-rose-900/60 bg-rose-50 dark:bg-rose-950/20'
               }`}
             >
               <div className="flex items-start gap-3 flex-1 min-w-0">
                 <div className="shrink-0 mt-0.5">
                   {r.isCorrect ? (
-                    <CheckCircle2 className="w-5 h-5 text-emerald-400" />
+                    <CheckCircle2 className="w-5 h-5 text-emerald-700 dark:text-emerald-400" />
                   ) : !r.isAnswered ? (
-                    <FileText className="w-5 h-5 text-[#6B7280]" />
+                    <FileText className="w-5 h-5 text-fg-subtle" />
                   ) : (
-                    <XCircle className="w-5 h-5 text-rose-400" />
+                    <XCircle className="w-5 h-5 text-rose-700 dark:text-rose-400" />
                   )}
                 </div>
 
                 <div className="flex-1 min-w-0">
                   <div className="flex flex-wrap items-center gap-2 mb-1">
-                    <span className="font-bold text-xs text-[#F3F4F6]">
+                    <span className="font-bold text-xs text-fg-strong">
                       Q{r.index + 1}
                     </span>
-                    <span className="text-[11px] font-mono text-[#9CA3AF]">
+                    <span className="text-[11px] font-mono text-fg-muted">
                       Your answer: {r.userAns.length > 0 ? r.userAns.join(', ') : 'None'} • Correct: {r.question.correctAnswers.join(', ')}
                     </span>
                   </div>
-                  <p className="text-xs text-[#D1D5DB] line-clamp-2">
+                  <p className="text-xs text-fg line-clamp-2">
                     {r.question.question}
                   </p>
                 </div>
@@ -291,7 +291,7 @@ export const ExamScoreReport: React.FC<ExamScoreReportProps> = ({
               <button
                 id={`review-q-btn-${r.index + 1}`}
                 onClick={() => onReviewQuestion(r.index)}
-                className="shrink-0 px-3 py-1.5 rounded-lg border border-[#1F2430] bg-[#161922] hover:border-[#C5A059]/40 hover:bg-[#1A1E2A] text-xs font-semibold text-[#DFB76C] flex items-center gap-1.5 transition cursor-pointer"
+                className="shrink-0 px-3 py-1.5 rounded-lg border border-line bg-elevated hover:border-accent/40 hover:bg-elevated-hover text-xs font-semibold text-accent-fg-strong flex items-center gap-1.5 transition cursor-pointer"
               >
                 <span>View</span>
                 <ArrowRight className="w-3.5 h-3.5" />

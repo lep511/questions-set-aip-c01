@@ -57,12 +57,10 @@ export default function App() {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   // Appearance & Audio Settings
-  const [isDark, setIsDark] = useState<boolean>(() => {
-    if (typeof window !== 'undefined') {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-    return false;
-  });
+  // Initial theme is resolved by the inline script in index.html (localStorage, then prefers-color-scheme)
+  const [isDark, setIsDark] = useState<boolean>(() =>
+    typeof document !== 'undefined' ? document.documentElement.classList.contains('dark') : true
+  );
   const [isMuted, setIsMuted] = useState<boolean>(false);
   const [textScale, setTextScale] = useState<TextScale>('base');
 
@@ -73,10 +71,13 @@ export default function App() {
 
   // Dark mode effect
   useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
+    const root = document.documentElement;
+    root.classList.toggle('dark', isDark);
+    root.style.colorScheme = isDark ? 'dark' : 'light';
+    try {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch {
+      // localStorage may be unavailable (e.g. private mode); theme still applies for this session
     }
   }, [isDark]);
 
@@ -422,7 +423,7 @@ export default function App() {
   const answeredCount = Object.keys(selectedAnswers).filter(k => (selectedAnswers[k] || []).length > 0).length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#0A0B0E] text-[#D1D5DB] transition-colors">
+    <div className="min-h-screen flex flex-col bg-canvas text-fg transition-colors">
       
       {/* Top Navigation Bar */}
       <Navbar
@@ -441,7 +442,7 @@ export default function App() {
         isMuted={isMuted}
         onToggleMute={() => setIsMuted(!isMuted)}
         isDark={isDark}
-        onToggleTheme={() => setIsDark(!isDark)}
+        onToggleTheme={() => setIsDark(d => !d)}
         textScale={textScale}
         onChangeTextScale={cycleTextScale}
         totalQuestions={questions.length}
@@ -463,11 +464,11 @@ export default function App() {
         <div className="mb-4 sm:mb-6 flex flex-wrap items-center justify-between gap-3">
           <div>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full bg-[#C5A059]/10 border border-[#C5A059]/30 text-[#DFB76C] text-[11px] font-bold uppercase tracking-wider">
+              <span className="px-2.5 py-0.5 rounded-full bg-accent/10 border border-accent/30 text-accent-fg-strong text-[11px] font-bold uppercase tracking-wider">
                 {mode === 'practice' ? '⚡ Instant Feedback Mode' : mode === 'exam' ? '⏱️ Timed Simulation' : '🗂️ Study Flashcards'}
               </span>
             </div>
-            <h2 className="text-lg sm:text-2xl font-bold text-[#F3F4F6] tracking-tight mt-1">
+            <h2 className="text-lg sm:text-2xl font-bold text-fg-strong tracking-tight mt-1">
               {examTitle}
             </h2>
           </div>
@@ -475,7 +476,7 @@ export default function App() {
           {/* Quick Progress Badges & Count Selector */}
           <div className="flex flex-wrap items-center gap-2 text-xs font-medium">
             {/* Quick 5, 10, 20, All pills */}
-            <div className="flex items-center rounded-lg bg-[#12141A] border border-[#1F2430] p-0.5">
+            <div className="flex items-center rounded-lg bg-surface border border-line p-0.5">
               {[5, 10, 20, 'all' as const].map((c) => {
                 const isActive = selectedCountSetting === c;
                 const label = c === 'all' ? `All (${allQuestionsPool.length})` : `${c} Qs`;
@@ -486,8 +487,8 @@ export default function App() {
                     onClick={() => handleStartSession(c, mode, false)}
                     className={`px-2.5 py-1 rounded-md text-[11px] font-bold transition-all cursor-pointer ${
                       isActive
-                        ? 'bg-[#C5A059] text-[#0A0B0E] shadow-xs'
-                        : 'text-[#9CA3AF] hover:text-[#DFB76C] hover:bg-[#181B23]'
+                        ? 'bg-accent text-on-accent shadow-xs'
+                        : 'text-fg-muted hover:text-accent-fg-strong hover:bg-surface-hover'
                     }`}
                     title={`Practice ${c === 'all' ? allQuestionsPool.length : c} questions`}
                   >
@@ -497,17 +498,17 @@ export default function App() {
               })}
             </div>
 
-            <span className="hidden sm:inline px-3 py-1.5 rounded-lg bg-[#12141A] border border-[#1F2430] text-[#9CA3AF] shadow-xs">
-              Answered: <strong className="text-[#DFB76C] font-semibold">{answeredCount}</strong> / {questions.length}
+            <span className="hidden sm:inline px-3 py-1.5 rounded-lg bg-surface border border-line text-fg-muted shadow-xs">
+              Answered: <strong className="text-accent-fg-strong font-semibold">{answeredCount}</strong> / {questions.length}
             </span>
 
             <button
               id="banner-remix-btn"
               onClick={handleRemixQuestions}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#12141A] border border-[#1F2430] hover:border-[#C5A059]/50 text-[#D1D5DB] hover:text-[#DFB76C] hover:bg-[#181B23] transition cursor-pointer shadow-xs"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface border border-line hover:border-accent/50 text-fg hover:text-accent-fg-strong hover:bg-surface-hover transition cursor-pointer shadow-xs"
               title="Shuffle all questions into random order"
             >
-              <Shuffle className="w-3.5 h-3.5 text-[#C5A059]" />
+              <Shuffle className="w-3.5 h-3.5 text-accent-fg" />
               <span className="font-semibold hidden sm:inline">Remix</span>
             </button>
           </div>
@@ -607,8 +608,8 @@ export default function App() {
 
       {/* Toast Feedback Notification */}
       {toastMessage && (
-        <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-[#161922] border border-[#C5A059]/40 text-[#F3F4F6] text-xs sm:text-sm font-medium shadow-2xl animate-in fade-in slide-in-from-bottom-3 duration-200">
-          <Shuffle className="w-4 h-4 text-[#C5A059] shrink-0" />
+        <div className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-elevated border border-accent/40 text-fg-strong text-xs sm:text-sm font-medium shadow-2xl animate-in fade-in slide-in-from-bottom-3 duration-200">
+          <Shuffle className="w-4 h-4 text-accent-fg shrink-0" />
           <span>{toastMessage}</span>
         </div>
       )}

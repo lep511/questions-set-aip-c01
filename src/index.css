@@ -1,7 +1,39 @@
 @import "tailwindcss";
 
+/* `dark:` follows the .dark class on <html> (set by the theme toggle) instead of the OS media query */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Palette tokens: light values by default, overridden for .dark below */
 @theme {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  --color-canvas: #F7F6F2;
+  --color-on-accent: #0A0B0E;
+  --color-backdrop: #1F2430;
+  --color-inset: #F1EFEA;
+  --color-surface: #FFFFFF;
+  --color-surface-raised: #FBFAF7;
+  --color-elevated: #F3F2EE;
+  --color-surface-hover: #ECEAE4;
+  --color-subtle: #EFEDE7;
+  --color-elevated-hover: #E9E6DF;
+  --color-elevated-active: #E1DDD4;
+  --color-line: #E3E0D8;
+  --color-line-soft: #E6E3DB;
+  --color-line-strong: #D5D1C7;
+  --color-line-gray: #C9CDD4;
+  --color-line-gray-strong: #9CA3AF;
+  --color-line-hover: #C2BDB1;
+  --color-scrollbar: #D6D3CB;
+  --color-fg-strong: #111318;
+  --color-fg-bright: #1F2430;
+  --color-fg: #2A2E37;
+  --color-fg-muted: #575D6B;
+  --color-fg-subtle: #6E7380;
+  --color-accent: #C5A059;
+  --color-accent-hover: #DFB76C;
+  --color-accent-fg: #8A6A24;
+  --color-accent-fg-strong: #7A5C1C;
 }
 
 @layer base {
@@ -9,28 +41,59 @@
     --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   }
 
+  /* Dark palette: the original Sophisticated Dark values */
+  .dark {
+    --color-canvas: #0A0B0E;
+    --color-on-accent: #0A0B0E;
+    --color-backdrop: #050608;
+    --color-inset: #0E1015;
+    --color-surface: #12141A;
+    --color-surface-raised: #141720;
+    --color-elevated: #161922;
+    --color-surface-hover: #181B23;
+    --color-subtle: #1A1D27;
+    --color-elevated-hover: #1A1E2A;
+    --color-elevated-active: #222838;
+    --color-line: #1F2430;
+    --color-line-soft: #262B36;
+    --color-line-strong: #2A3244;
+    --color-line-gray: #374151;
+    --color-line-gray-strong: #4B5563;
+    --color-line-hover: #384050;
+    --color-scrollbar: #1F2937;
+    --color-fg-strong: #F3F4F6;
+    --color-fg-bright: #E5E7EB;
+    --color-fg: #D1D5DB;
+    --color-fg-muted: #9CA3AF;
+    --color-fg-subtle: #6B7280;
+    --color-accent: #C5A059;
+    --color-accent-hover: #DFB76C;
+    --color-accent-fg: #C5A059;
+    --color-accent-fg-strong: #DFB76C;
+  }
+
   body {
     font-family: var(--font-sans);
-    background-color: #0A0B0E;
-    color: #D1D5DB;
+    background-color: var(--color-canvas);
+    color: var(--color-fg);
   }
 }
 
-/* Custom refined scrollbars for Sophisticated Dark aesthetic */
+/* Custom refined scrollbars, themed via palette tokens */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0A0B0E;
+  background: var(--color-canvas);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1F2937;
+  background: var(--color-scrollbar);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #C5A059;
+  background: var(--color-accent);
 }

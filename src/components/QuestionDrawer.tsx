@@ -81,15 +81,15 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
   return (
     <div className="fixed inset-0 z-50 flex justify-end bg-black/70 backdrop-blur-xs transition-opacity animate-in fade-in">
       <div 
-        className="w-full max-w-md bg-[#12141A] h-full shadow-2xl flex flex-col border-l border-[#1F2430] text-[#D1D5DB] animate-in slide-in-from-right duration-200"
+        className="w-full max-w-md bg-surface h-full shadow-2xl flex flex-col border-l border-line text-fg animate-in slide-in-from-right duration-200"
       >
         {/* Header */}
-        <div className="p-4 sm:p-5 border-b border-[#1F2430] flex items-center justify-between">
+        <div className="p-4 sm:p-5 border-b border-line flex items-center justify-between">
           <div>
-            <h3 className="font-bold text-base text-[#F3F4F6]">
+            <h3 className="font-bold text-base text-fg-strong">
               Question Navigator
             </h3>
-            <p className="text-xs text-[#9CA3AF]">
+            <p className="text-xs text-fg-muted">
               {answeredCount} of {questions.length} answered • {flaggedCount} flagged
             </p>
           </div>
@@ -99,10 +99,10 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
               <button
                 id="drawer-remix-questions-btn"
                 onClick={onRemixQuestions}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-[#161922] hover:bg-[#C5A059]/20 hover:text-[#DFB76C] text-xs font-medium border border-[#1F2430] text-[#9CA3AF] transition cursor-pointer"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-elevated hover:bg-accent/20 hover:text-accent-fg-strong text-xs font-medium border border-line text-fg-muted transition cursor-pointer"
                 title="Remix & Shuffle question order"
               >
-                <Shuffle className="w-3.5 h-3.5 text-[#C5A059]" />
+                <Shuffle className="w-3.5 h-3.5 text-accent-fg" />
                 <span>Remix</span>
               </button>
             )}
@@ -110,7 +110,7 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
             <button
               id="close-question-drawer-btn"
               onClick={onClose}
-              className="p-1.5 rounded-lg text-[#9CA3AF] hover:text-[#F3F4F6] hover:bg-[#161922] transition cursor-pointer"
+              className="p-1.5 rounded-lg text-fg-muted hover:text-fg-strong hover:bg-elevated transition cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -118,13 +118,13 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
         </div>
 
         {/* Filter Pills */}
-        <div className="p-3 border-b border-[#1F2430] flex items-center gap-1.5 overflow-x-auto text-xs">
+        <div className="p-3 border-b border-line flex items-center gap-1.5 overflow-x-auto text-xs">
           <button
             onClick={() => setFilter('all')}
             className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition cursor-pointer ${
               filter === 'all'
-                ? 'bg-[#C5A059] text-[#0A0B0E] font-bold'
-                : 'bg-[#161922] text-[#9CA3AF] hover:text-[#F3F4F6] border border-[#1F2430]'
+                ? 'bg-accent text-on-accent font-bold'
+                : 'bg-elevated text-fg-muted hover:text-fg-strong border border-line'
             }`}
           >
             All ({questions.length})
@@ -133,8 +133,8 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
             onClick={() => setFilter('unanswered')}
             className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition cursor-pointer ${
               filter === 'unanswered'
-                ? 'bg-[#C5A059] text-[#0A0B0E] font-bold'
-                : 'bg-[#161922] text-[#9CA3AF] hover:text-[#F3F4F6] border border-[#1F2430]'
+                ? 'bg-accent text-on-accent font-bold'
+                : 'bg-elevated text-fg-muted hover:text-fg-strong border border-line'
             }`}
           >
             Unanswered ({questions.length - answeredCount})
@@ -143,8 +143,8 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
             onClick={() => setFilter('flagged')}
             className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition cursor-pointer ${
               filter === 'flagged'
-                ? 'bg-[#C5A059] text-[#0A0B0E] font-bold'
-                : 'bg-[#161922] text-[#9CA3AF] hover:text-[#F3F4F6] border border-[#1F2430]'
+                ? 'bg-accent text-on-accent font-bold'
+                : 'bg-elevated text-fg-muted hover:text-fg-strong border border-line'
             }`}
           >
             Flagged ({flaggedCount})
@@ -155,7 +155,7 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
               className={`px-3 py-1.5 rounded-lg font-medium whitespace-nowrap transition cursor-pointer ${
                 filter === 'incorrect'
                   ? 'bg-rose-600 text-white font-bold'
-                  : 'bg-[#161922] text-[#9CA3AF] hover:text-[#F3F4F6] border border-[#1F2430]'
+                  : 'bg-elevated text-fg-muted hover:text-fg-strong border border-line'
               }`}
             >
               Missed
@@ -164,9 +164,9 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
         </div>
 
         {/* Legend */}
-        <div className="px-4 py-2.5 bg-[#0E1015] border-b border-[#1F2430] flex flex-wrap items-center gap-3 text-[11px] text-[#9CA3AF]">
+        <div className="px-4 py-2.5 bg-inset border-b border-line flex flex-wrap items-center gap-3 text-[11px] text-fg-muted">
           <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-[#C5A059]"></span>
+            <span className="w-2.5 h-2.5 rounded-full bg-accent"></span>
             <span>Current</span>
           </div>
           {mode === 'practice' ? (
@@ -182,7 +182,7 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
             </>
           ) : (
             <div className="flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-[#DFB76C]/60 border border-[#C5A059]"></span>
+              <span className="w-2.5 h-2.5 rounded-full bg-accent-hover/60 border border-accent"></span>
               <span>Answered</span>
             </div>
           )}
@@ -198,10 +198,10 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
             {filteredQuestions.map(({ q, idx, status }) => {
               const isCurrent = idx === currentIndex;
               
-              let btnStyle = 'bg-[#161922] border-[#1F2430] text-[#D1D5DB] hover:border-[#C5A059]/40 hover:bg-[#1A1E2A]';
+              let btnStyle = 'bg-elevated border-line text-fg hover:border-accent/40 hover:bg-elevated-hover';
 
               if (isCurrent) {
-                btnStyle = 'ring-2 ring-[#C5A059] bg-[#C5A059] text-[#0A0B0E] font-bold border-transparent';
+                btnStyle = 'ring-2 ring-accent bg-accent text-on-accent font-bold border-transparent';
               } else if (mode === 'practice' && status.isChecked) {
                 if (status.isCorrect) {
                   btnStyle = 'bg-emerald-600 text-white border-emerald-500 font-bold';
@@ -209,7 +209,7 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
                   btnStyle = 'bg-rose-600 text-white border-rose-500 font-bold';
                 }
               } else if (status.isSelected) {
-                btnStyle = 'bg-[#C5A059]/15 border-[#C5A059]/50 text-[#DFB76C] font-semibold';
+                btnStyle = 'bg-accent/15 border-accent/50 text-accent-fg-strong font-semibold';
               }
 
               return (
@@ -226,7 +226,7 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
 
                   {/* Flag indicator icon */}
                   {status.isFlagged && (
-                    <Bookmark className="w-3 h-3 text-[#C5A059] fill-[#C5A059] absolute top-1.5 right-1.5" />
+                    <Bookmark className="w-3 h-3 text-accent-fg fill-accent absolute top-1.5 right-1.5" />
                   )}
                 </button>
               );
@@ -234,7 +234,7 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
           </div>
 
           {filteredQuestions.length === 0 && (
-            <div className="text-center py-12 text-[#6B7280] text-xs">
+            <div className="text-center py-12 text-fg-subtle text-xs">
               No questions found for this filter.
             </div>
           )}
@@ -242,14 +242,14 @@ export const QuestionDrawer: React.FC<QuestionDrawerProps> = ({
 
         {/* Footer with Submit button for Exam Mode */}
         {mode === 'exam' && !isExamSubmitted && (
-          <div className="p-4 border-t border-[#1F2430] bg-[#0E1015]">
+          <div className="p-4 border-t border-line bg-inset">
             <button
               id="drawer-submit-exam-btn"
               onClick={() => {
                 onClose();
                 onSubmitExam();
               }}
-              className="w-full py-3 rounded-xl bg-[#C5A059] hover:bg-[#DFB76C] text-[#0A0B0E] font-bold text-sm shadow-lg shadow-[#C5A059]/20 flex items-center justify-center gap-2 transition cursor-pointer"
+              className="w-full py-3 rounded-xl bg-accent hover:bg-accent-hover text-on-accent font-bold text-sm shadow-lg shadow-accent/20 flex items-center justify-center gap-2 transition cursor-pointer"
             >
               <Send className="w-4 h-4" />
               <span>Submit & Finish Exam</span>
