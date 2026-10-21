@@ -12,6 +12,7 @@ export interface QuestionSet {
 import { SET_001_QUESTIONS } from './sets/set-001';
 import { SET_002_QUESTIONS } from './sets/set-002';
 import { SET_P01_QUESTIONS } from './sets/set-p01';
+import { SET_P02_QUESTIONS } from './sets/set-p02';
 
 export const QUESTION_SETS: QuestionSet[] = [
   {
@@ -34,6 +35,13 @@ export const QUESTION_SETS: QuestionSet[] = [
     description: 'AWS Certified Generative AI - Practice Set',
     questionCount: 20,
     questions: SET_P01_QUESTIONS
+  },
+  {
+    id: 'set-p02',
+    name: 'Set-P02',
+    description: 'AWS Certified Generative AI - Practice Set 2',
+    questionCount: 20,
+    questions: SET_P02_QUESTIONS
   }
 ];
 

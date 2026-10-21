@@ -7,8 +7,9 @@ This application now supports multiple question sets that can be selected from t
 - **Set-001**: AWS Certified Generative AI - Part 1 (31 questions)
 - **Set-002**: AWS Certified Generative AI - Part 2 (30 questions)
 - **Set-P01**: AWS Certified Generative AI - Practice Set (20 questions)
+- **Set-P02**: AWS Certified Generative AI - Practice Set 2 (20 questions)
 
-**Total: 81 questions across 3 sets**
+**Total: 101 questions across 4 sets**
 
 ## File Structure
 
@@ -19,7 +20,9 @@ src/
 │   ├── defaultExam.ts           # Original file with normalizeQuestions function
 │   └── sets/
 │       ├── set-001.ts           # Questions 1-31
-│       └── set-002.ts           # Questions 32-61
+│       ├── set-002.ts           # Questions 32-61
+│       ├── set-p01.ts           # Practice Set 1 (20 questions)
+│       └── set-p02.ts           # Practice Set 2 (20 questions)
 ```
 
 ## How to Add New Sets
