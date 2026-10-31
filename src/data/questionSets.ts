@@ -16,6 +16,7 @@ import { SET_P02_QUESTIONS } from './sets/set-p02';
 import { SET_P03_QUESTIONS } from './sets/set-p03';
 import { SET_P04_QUESTIONS } from './sets/set-p04';
 import { SET_P05_QUESTIONS } from './sets/set-p05';
+import { FLASH_CARDS_001 } from './sets/flash-cards-001';
 
 export const QUESTION_SETS: QuestionSet[] = [
   {
@@ -66,6 +67,13 @@ export const QUESTION_SETS: QuestionSet[] = [
     description: 'AWS Certified AI Professional - Agentic AI Lens',
     questionCount: 20,
     questions: SET_P05_QUESTIONS
+  },
+  {
+    id: 'flash-cards-001',
+    name: 'Flash Cards',
+    description: 'AI Professional - Quick Recall Flash Cards',
+    questionCount: 30,
+    questions: FLASH_CARDS_001
   }
 ];
 

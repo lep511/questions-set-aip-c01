@@ -26,8 +26,9 @@ A responsive exam simulator and question practice app for the **AWS Certified AI
 | Set-P03 | AWS Certified AI Professional - Practice Set 3 | 22 |
 | Set-P04 | AWS Certified AI Professional - Practice Set 4 | 20 |
 | Set-P05 | AWS Certified AI Professional - Agentic AI Lens | 20 |
+| Flash Cards | AI Professional - Quick Recall Flash Cards | 30 |
 
-**Total: 163 questions across 7 sets**
+**Total: 193 questions across 8 sets**
 
 ## Getting Started
 
