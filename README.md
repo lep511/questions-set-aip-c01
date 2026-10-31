@@ -1,6 +1,6 @@
 # Exam Simulator
 
-A responsive exam simulator and question practice app for the **AWS Certified AI Practitioner (AIP-C01)** certification. Built with React, TypeScript, Vite, and Tailwind CSS.
+A responsive exam simulator and question practice app for the **AWS Certified AI Professional (AIP-C01)** certification. Built with React, TypeScript, Vite, and Tailwind CSS.
 
 ## Features
 
@@ -23,8 +23,11 @@ A responsive exam simulator and question practice app for the **AWS Certified AI
 | Set-002 | AWS Certified Generative AI - Part 2 | 30 |
 | Set-P01 | Practice Set 1 | 20 |
 | Set-P02 | Practice Set 2 | 20 |
+| Set-P03 | AWS Certified AI Professional - Practice Set 3 | 22 |
+| Set-P04 | AWS Certified AI Professional - Practice Set 4 | 20 |
+| Set-P05 | AWS Certified AI Professional - Agentic AI Lens | 20 |
 
-**Total: 101 questions across 4 sets**
+**Total: 163 questions across 7 sets**
 
 ## Getting Started
 

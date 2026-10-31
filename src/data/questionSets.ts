@@ -15,6 +15,7 @@ import { SET_P01_QUESTIONS } from './sets/set-p01';
 import { SET_P02_QUESTIONS } from './sets/set-p02';
 import { SET_P03_QUESTIONS } from './sets/set-p03';
 import { SET_P04_QUESTIONS } from './sets/set-p04';
+import { SET_P05_QUESTIONS } from './sets/set-p05';
 
 export const QUESTION_SETS: QuestionSet[] = [
   {
@@ -58,6 +59,13 @@ export const QUESTION_SETS: QuestionSet[] = [
     description: 'AWS Certified AI Professional - Practice Set 4',
     questionCount: 20,
     questions: SET_P04_QUESTIONS
+  },
+  {
+    id: 'set-p05',
+    name: 'Set-P05',
+    description: 'AWS Certified AI Professional - Agentic AI Lens',
+    questionCount: 20,
+    questions: SET_P05_QUESTIONS
   }
 ];
 
