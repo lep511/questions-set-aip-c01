@@ -2,7 +2,7 @@ import { RawQuestion } from '../../types';
 
 export const SET_P05_QUESTIONS: RawQuestion[] = [
     {
-        "question": "A financial services company is building an agentic AI system on AWS where agents process loan applications, access customer financial data, and execute transactions. The agents currently use long-lived IAM access keys stored in environment variables. The security team has flagged that if any agent is compromised, the attacker could access resources far beyond what the agent needs.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which combination of actions should the company take to implement least privilege with dynamic boundaries for its agents? (Select TWO.)",
+        "question": "A financial services company is building an agentic AI system on AWS where agents process loan applications, access customer financial data, and execute transactions. The agents currently use long-lived IAM access keys stored in environment variables. The security team has flagged that if any agent is compromised, the attacker could access resources far beyond what the agent needs.\n\nWhich combination of actions should the company take to implement least privilege with dynamic boundaries for its agents? (Select TWO.)",
         "options": [
             {
                 "id": "A",
@@ -55,7 +55,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         ]
     },
     {
-        "question": "A healthcare company operates a multi-agent AI system where specialized agents handle patient intake, diagnosis assistance, and treatment recommendations. The agents coordinate by calling each other directly over synchronous HTTP connections. Recently, when the diagnosis agent experienced high latency, the entire patient intake workflow failed because every downstream agent was blocked waiting for responses.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, what is the MOST effective architectural change to prevent cascading failures in this multi-agent system?",
+        "question": "A healthcare company operates a multi-agent AI system where specialized agents handle patient intake, diagnosis assistance, and treatment recommendations. The agents coordinate by calling each other directly over synchronous HTTP connections. Recently, when the diagnosis agent experienced high latency, the entire patient intake workflow failed because every downstream agent was blocked waiting for responses.\n\nWhat is the MOST effective architectural change to prevent cascading failures in this multi-agent system?",
         "options": [
             {
                 "id": "A",
@@ -105,7 +105,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "B"
     },
     {
-        "question": "A retail company uses an AI agent on Amazon Bedrock that processes customer service requests. The agent uses the largest available foundation model for every request, including simple tasks like checking order status and answering frequently asked questions. Cost analysis shows that 80% of requests are simple lookups that a smaller model could handle equally well.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which approach should the company implement to optimize model invocation costs while maintaining quality for complex requests?",
+        "question": "A retail company uses an AI agent on Amazon Bedrock that processes customer service requests. The agent uses the largest available foundation model for every request, including simple tasks like checking order status and answering frequently asked questions. Cost analysis shows that 80% of requests are simple lookups that a smaller model could handle equally well.\n\nWhich approach should the company implement to optimize model invocation costs while maintaining quality for complex requests?",
         "options": [
             {
                 "id": "A",
@@ -155,7 +155,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "D"
     },
     {
-        "question": "An enterprise is deploying a multi-agent system where agents from different business units interact to complete cross-functional tasks. The agents currently run in a flat network with no segmentation. Inter-agent messages rely solely on TLS for transport-level encryption. The security team is concerned that if one agent is compromised, it could impersonate other agents or tamper with messages in transit through queues.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which TWO actions should the enterprise take to secure multi-agent orchestration? (Select TWO.)",
+        "question": "An enterprise is deploying a multi-agent system where agents from different business units interact to complete cross-functional tasks. The agents currently run in a flat network with no segmentation. Inter-agent messages rely solely on TLS for transport-level encryption. The security team is concerned that if one agent is compromised, it could impersonate other agents or tamper with messages in transit through queues.\n\nWhich TWO actions should the enterprise take to secure multi-agent orchestration? (Select TWO.)",
         "options": [
             {
                 "id": "A",
@@ -208,7 +208,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         ]
     },
     {
-        "question": "A company has deployed an AI agent that processes employee expense reports and can approve reimbursements up to $10,000. The company currently routes every agent action—including viewing receipts, categorizing expenses, and approving payments—through human review. Reviewers are overwhelmed and have started rubber-stamping approvals without careful review.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which approach should the company implement to balance human oversight with agent autonomy?",
+        "question": "A company has deployed an AI agent that processes employee expense reports and can approve reimbursements up to $10,000. The company currently routes every agent action—including viewing receipts, categorizing expenses, and approving payments—through human review. Reviewers are overwhelmed and have started rubber-stamping approvals without careful review.\n\nWhich approach should the company implement to balance human oversight with agent autonomy?",
         "options": [
             {
                 "id": "A",
@@ -258,7 +258,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "C"
     },
     {
-        "question": "A logistics company runs a multi-agent AI system where multiple specialized agents (routing, scheduling, inventory) need to coordinate shared resources like delivery fleet assignments. Agents currently coordinate peer-to-peer, and the team is experiencing deadlocks when two agents simultaneously try to assign the same delivery vehicle.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which design pattern should the company implement to resolve coordination conflicts reliably?",
+        "question": "A logistics company runs a multi-agent AI system where multiple specialized agents (routing, scheduling, inventory) need to coordinate shared resources like delivery fleet assignments. Agents currently coordinate peer-to-peer, and the team is experiencing deadlocks when two agents simultaneously try to assign the same delivery vehicle.\n\nWhich design pattern should the company implement to resolve coordination conflicts reliably?",
         "options": [
             {
                 "id": "A",
@@ -308,7 +308,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "A"
     },
     {
-        "question": "A media company operates AI agents that generate content summaries. When an agent produces an unexpected output, the operations team spends hours manually correlating infrastructure logs across services. They can see Lambda duration and API Gateway latency metrics, but they have no visibility into the agent's reasoning steps, tool invocations, or memory operations.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which practice should the company implement FIRST to improve observability of their agentic system?",
+        "question": "A media company operates AI agents that generate content summaries. When an agent produces an unexpected output, the operations team spends hours manually correlating infrastructure logs across services. They can see Lambda duration and API Gateway latency metrics, but they have no visibility into the agent's reasoning steps, tool invocations, or memory operations.\n\nWhich practice should the company implement FIRST to improve observability of their agentic system?",
         "options": [
             {
                 "id": "A",
@@ -358,7 +358,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "B"
     },
     {
-        "question": "A company's AI agent operates without iteration limits on its reasoning loop. The agent occasionally enters runaway loops where it reasons for dozens of iterations without improving output quality, consuming significant tokens and causing high latency. Users experience response times exceeding 30 seconds for simple queries.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which approach should the company implement to optimize the agent's reasoning pipeline?",
+        "question": "A company's AI agent operates without iteration limits on its reasoning loop. The agent occasionally enters runaway loops where it reasons for dozens of iterations without improving output quality, consuming significant tokens and causing high latency. Users experience response times exceeding 30 seconds for simple queries.\n\nWhich approach should the company implement to optimize the agent's reasoning pipeline?",
         "options": [
             {
                 "id": "A",
@@ -408,7 +408,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "D"
     },
     {
-        "question": "An insurance company has separate agent and human user IAM roles but discovers during an audit that agent roles and human roles have become blurred over time. Some agents can assume human-designated roles through role chaining, and audit trails cannot clearly distinguish agent actions from human actions during incident investigations.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which solution addresses this identity separation issue?",
+        "question": "An insurance company has separate agent and human user IAM roles but discovers during an audit that agent roles and human roles have become blurred over time. Some agents can assume human-designated roles through role chaining, and audit trails cannot clearly distinguish agent actions from human actions during incident investigations.\n\nWhich solution addresses this identity separation issue?",
         "options": [
             {
                 "id": "A",
@@ -458,7 +458,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "A"
     },
     {
-        "question": "A SaaS company's AI agent system prompt and tool catalog have grown substantially over 6 months. The system prompt now contains 15,000 tokens of instructions, and each invocation includes descriptions for 40 tools even though most requests only use 2-3 tools. The company notices that the fixed input-token cost paid on every invocation has risen significantly even though traffic is flat.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which TWO approaches should the company use to optimize token consumption costs? (Select TWO.)",
+        "question": "A SaaS company's AI agent system prompt and tool catalog have grown substantially over 6 months. The system prompt now contains 15,000 tokens of instructions, and each invocation includes descriptions for 40 tools even though most requests only use 2-3 tools. The company notices that the fixed input-token cost paid on every invocation has risen significantly even though traffic is flat.\n\nWhich TWO approaches should the company use to optimize token consumption costs? (Select TWO.)",
         "options": [
             {
                 "id": "A",
@@ -511,7 +511,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         ]
     },
     {
-        "question": "A company is building its first AI agent on AWS and wants to ensure the agent's operational boundaries are enforced reliably. A junior developer suggests that carefully written system prompt instructions should be sufficient to keep the agent within its intended scope.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, why is this approach insufficient, and what should be implemented instead?",
+        "question": "A company is building its first AI agent on AWS and wants to ensure the agent's operational boundaries are enforced reliably. A junior developer suggests that carefully written system prompt instructions should be sufficient to keep the agent within its intended scope.\n\nWhy is this approach insufficient, and what should be implemented instead?",
         "options": [
             {
                 "id": "A",
@@ -561,7 +561,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "C"
     },
     {
-        "question": "A company's user-facing AI agent waits for the complete response from the foundation model before any output reaches the user. Users report that the agent feels slow because they see nothing for 8-10 seconds before the full response appears, even though the total processing time is acceptable.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which practice addresses this perceived latency issue?",
+        "question": "A company's user-facing AI agent waits for the complete response from the foundation model before any output reaches the user. Users report that the agent feels slow because they see nothing for 8-10 seconds before the full response appears, even though the total processing time is acceptable.\n\nWhich practice addresses this perceived latency issue?",
         "options": [
             {
                 "id": "A",
@@ -611,7 +611,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "D"
     },
     {
-        "question": "A manufacturing company runs a multi-agent system where agents handle quality inspection, supply chain optimization, and production scheduling. Each agent has accreted unrelated tools and broader system prompts over time, making the system difficult to debug. When the quality inspection agent fails, it impacts supply chain functions because they share the same process.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which design principle should the company follow?",
+        "question": "A manufacturing company runs a multi-agent system where agents handle quality inspection, supply chain optimization, and production scheduling. Each agent has accreted unrelated tools and broader system prompts over time, making the system difficult to debug. When the quality inspection agent fails, it impacts supply chain functions because they share the same process.\n\nWhich design principle should the company follow?",
         "options": [
             {
                 "id": "A",
@@ -661,7 +661,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "A"
     },
     {
-        "question": "A company deploys AI agents that act on behalf of users to access internal systems. Currently, when an agent needs to access a user's resources, it assumes the user's IAM role directly. This approach collapses the audit trail because CloudTrail shows the user's identity, not the agent's, and gives the agent the user's full permission set for the entire session.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which approach should the company use for delegated access?",
+        "question": "A company deploys AI agents that act on behalf of users to access internal systems. Currently, when an agent needs to access a user's resources, it assumes the user's IAM role directly. This approach collapses the audit trail because CloudTrail shows the user's identity, not the agent's, and gives the agent the user's full permission set for the entire session.\n\nWhich approach should the company use for delegated access?",
         "options": [
             {
                 "id": "A",
@@ -711,7 +711,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "A"
     },
     {
-        "question": "An organization's multi-agent system uses hardcoded agent identifiers in the orchestration layer. When the preferred agent becomes unavailable, the orchestrator cannot adapt and the entire workflow fails. The team wants to make the system resilient to individual agent failures.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which TWO practices should the organization implement? (Select TWO.)",
+        "question": "An organization's multi-agent system uses hardcoded agent identifiers in the orchestration layer. When the preferred agent becomes unavailable, the orchestrator cannot adapt and the entire workflow fails. The team wants to make the system resilient to individual agent failures.\n\nWhich TWO practices should the organization implement? (Select TWO.)",
         "options": [
             {
                 "id": "A",
@@ -764,7 +764,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         ]
     },
     {
-        "question": "A company stores its AI agent audit trails in mutable Amazon S3 storage. During a compliance audit, the auditors question the integrity of the logs because they could have been altered after the fact. Additionally, the logs contain personally identifiable information (PII) from customer interactions that should not be stored in raw form.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which approach should the company implement for audit trails?",
+        "question": "A company stores its AI agent audit trails in mutable Amazon S3 storage. During a compliance audit, the auditors question the integrity of the logs because they could have been altered after the fact. Additionally, the logs contain personally identifiable information (PII) from customer interactions that should not be stored in raw form.\n\nWhich approach should the company implement for audit trails?",
         "options": [
             {
                 "id": "A",
@@ -814,7 +814,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "B"
     },
     {
-        "question": "A company runs an AI agent fleet where each agent instance maintains its own isolated cache. The team notices that when Agent A resolves a query, Agent B often processes the same query independently minutes later, duplicating the model inference cost. The fleet handles thousands of similar queries daily.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens sustainability pillar, which caching strategy should the company implement?",
+        "question": "A company runs an AI agent fleet where each agent instance maintains its own isolated cache. The team notices that when Agent A resolves a query, Agent B often processes the same query independently minutes later, duplicating the model inference cost. The fleet handles thousands of similar queries daily.\n\nWhich caching strategy should the company implement?",
         "options": [
             {
                 "id": "A",
@@ -864,7 +864,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "D"
     },
     {
-        "question": "A startup has deployed behavioral baselines and anomaly detection for its AI agent system. However, the baselines were set once at deployment and have never been refreshed. Over time, the agent's behavior has legitimately evolved as new tools and capabilities were added, causing constant false positive alerts. Meanwhile, a gradual performance degradation has gone undetected because it slowly redefined the baseline.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, how should the company manage behavioral baselines for agent monitoring?",
+        "question": "A startup has deployed behavioral baselines and anomaly detection for its AI agent system. However, the baselines were set once at deployment and have never been refreshed. Over time, the agent's behavior has legitimately evolved as new tools and capabilities were added, causing constant false positive alerts. Meanwhile, a gradual performance degradation has gone undetected because it slowly redefined the baseline.\n\nHow should the company manage behavioral baselines for agent monitoring?",
         "options": [
             {
                 "id": "A",
@@ -914,7 +914,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "C"
     },
     {
-        "question": "A company wants to standardize communication between its AI agents. Currently, each agent pair has its own custom message format, error format, and retry policy. Every time a new agent is added, the team must build a translation layer between it and every existing agent.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, which approach should the company adopt?",
+        "question": "A company wants to standardize communication between its AI agents. Currently, each agent pair has its own custom message format, error format, and retry policy. Every time a new agent is added, the team must build a translation layer between it and every existing agent.\n\nWhich approach should the company adopt?",
         "options": [
             {
                 "id": "A",
@@ -964,7 +964,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "correct_answer": "B"
     },
     {
-        "question": "A company uses AI agents that consume high volumes of repetitive requests. The team is considering fine-tuning a smaller model on their most common task categories to replace the general-purpose large model for those tasks. A team member is excited about fine-tuning and wants to customize models for all agent tasks, including low-volume niche tasks.\n\nAccording to the AWS Well-Architected Framework Agentic AI Lens, what should guide the decision to pursue model customization?",
+        "question": "A company uses AI agents that consume high volumes of repetitive requests. The team is considering fine-tuning a smaller model on their most common task categories to replace the general-purpose large model for those tasks. A team member is excited about fine-tuning and wants to customize models for all agent tasks, including low-volume niche tasks.\n\nWhat should guide the decision to pursue model customization?",
         "options": [
             {
                 "id": "A",
