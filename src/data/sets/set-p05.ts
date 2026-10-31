@@ -17,7 +17,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "B",
-                "text": "Create a single IAM role with broad permissions shared by all agents and rotate the access keys monthly.",
+                "text": "Create a single IAM role with broad administrative permissions (s3:*, dynamodb:*, bedrock:*) shared by all agents across all environments, and implement a monthly rotation schedule for the long-lived access keys using AWS Secrets Manager automatic rotation with a Lambda function.",
                 "explanation": "Shared broad IAM roles and long-lived credentials directly violate the Agentic AI Lens best practices. A single shared role means that a compromise of any agent gives access to all resources, and monthly rotation still leaves a large exposure window.",
                 "references": [
                     {
@@ -39,7 +39,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Embed agent permissions directly in the system prompt instructions and rely on the foundation model to enforce access boundaries.",
+                "text": "Embed agent permissions directly in the system prompt instructions using structured JSON policy blocks, and configure Amazon Bedrock Guardrails with custom word filters to block any API calls that fall outside the defined permission scope at inference time.",
                 "explanation": "System prompt instructions are not a security control. The Agentic AI Lens specifically identifies relying on prompt-based alignment as an anti-pattern. Permission enforcement must use deterministic mechanisms like IAM policies, not probabilistic model behavior.",
                 "references": [
                     {
@@ -59,7 +59,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Increase the timeout values on all synchronous HTTP connections between agents to accommodate latency spikes.",
+                "text": "Increase the timeout values on all synchronous HTTP connections between agents to 300 seconds using Amazon API Gateway stage settings, and configure automatic retry with exponential backoff at the integration level to accommodate latency spikes.",
                 "explanation": "Increasing timeouts does not prevent cascading failures — it simply delays them and keeps resources blocked for longer periods. The Agentic AI Lens identifies direct synchronous calls as a common issue that leads to cascading failures.",
                 "references": [
                     {
@@ -92,7 +92,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Add retry logic with exponential backoff to each agent's HTTP client configuration.",
+                "text": "Add retry logic with exponential backoff and jitter to each agent's HTTP client configuration using the AWS SDK built-in retry strategy, and deploy an Application Load Balancer health check to detect slow agents.",
                 "explanation": "While retry logic is a useful component, retries alone on synchronous calls do not decouple agents. If the downstream agent is slow or failing, retries still block the calling agent and can amplify load on the failing service. A messaging layer provides the decoupling needed to prevent cascading failures.",
                 "references": [
                     {
@@ -109,7 +109,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Switch all requests to the smallest available model to minimize costs.",
+                "text": "Switch all requests to the smallest available model across all task categories to minimize per-invocation costs, and use Amazon Bedrock batch inference for any remaining complex queries that fail quality thresholds on the small model.",
                 "explanation": "Using only the smallest model would degrade quality for the 20% of complex requests that require stronger reasoning capabilities. The Agentic AI Lens recommends matching model capability to task demand, not simply minimizing model size.",
                 "references": [
                     {
@@ -119,13 +119,13 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "D",
-                "text": "Implement tiered model selection with a pre-classifier that routes each invocation to a model tier based on task complexity, and configure model cascading with confidence-based escalation to a more capable model when the assigned model produces low-confidence outputs.",
-                "explanation": "The Agentic AI Lens recommends architecting tiered model selection to match each task to the cheapest model capable of acceptable quality, and escalating only when confidence drops. A pre-classifier routes invocations by complexity, and cascading ensures complex tasks still get the reasoning power they need.",
+                "id": "B",
+                "text": "Reduce the maximum output token limit on all requests to 512 tokens using Amazon Bedrock inference parameters, implement response truncation at the application layer, and configure Amazon CloudWatch alarms to monitor average token consumption per invocation.",
+                "explanation": "While reducing output tokens can save some cost, it does not address the root issue: every invocation pays the higher per-token cost of the large model regardless of task complexity. The Agentic AI Lens recommends tiered model selection as the primary cost optimization strategy.",
                 "references": [
                     {
-                        "title": "AGENTCOST02-BP01: Architect tiered model selection for cost-performance optimization",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp01.html"
+                        "title": "AGENTCOST02-BP02: Cost optimize token consumption through efficient prompt engineering",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp02.html"
                     }
                 ]
             },
@@ -141,13 +141,13 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "B",
-                "text": "Reduce the maximum output token limit on all requests to lower per-invocation costs.",
-                "explanation": "While reducing output tokens can save some cost, it does not address the root issue: every invocation pays the higher per-token cost of the large model regardless of task complexity. The Agentic AI Lens recommends tiered model selection as the primary cost optimization strategy.",
+                "id": "D",
+                "text": "Implement tiered model selection with a pre-classifier that routes invocations by task complexity, and configure model cascading with confidence-based escalation when assigned models produce low-confidence outputs.",
+                "explanation": "The Agentic AI Lens recommends architecting tiered model selection to match each task to the cheapest model capable of acceptable quality, and escalating only when confidence drops. A pre-classifier routes invocations by complexity, and cascading ensures complex tasks still get the reasoning power they need.",
                 "references": [
                     {
-                        "title": "AGENTCOST02-BP02: Cost optimize token consumption through efficient prompt engineering",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp02.html"
+                        "title": "AGENTCOST02-BP01: Architect tiered model selection for cost-performance optimization",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp01.html"
                     }
                 ]
             }
@@ -181,7 +181,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Enable AWS CloudTrail logging for all agent API calls and review the logs monthly.",
+                "text": "Enable AWS CloudTrail logging for all agent API calls with S3 data event recording, configure CloudTrail Insights to detect unusual activity, create a monthly review schedule with Amazon Athena queries against the CloudTrail log bucket, and set up Amazon SNS notifications for high-severity findings.",
                 "explanation": "While CloudTrail logging is important for auditing, it is a detective control, not a preventive one. It does not prevent impersonation or message tampering in real time. The Agentic AI Lens requires both trust boundary enforcement and message-level signing as preventive controls for multi-agent security.",
                 "references": [
                     {
@@ -192,7 +192,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Route all inter-agent traffic through a single API Gateway endpoint with an API key for authentication.",
+                "text": "Route all inter-agent traffic through a single Amazon API Gateway REST endpoint with API key-based authentication, configure usage plans with per-key throttling limits, and enable AWS WAF on the gateway to filter malicious requests.",
                 "explanation": "A shared API key is a weak authentication mechanism. The Agentic AI Lens identifies shared API keys as a common anti-pattern for agent authentication. API Gateway also does not provide message-level integrity verification for messages persisted in queues.",
                 "references": [
                     {
@@ -212,8 +212,19 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Remove all human review to eliminate the bottleneck and rely entirely on Amazon Bedrock Guardrails to enforce boundaries.",
+                "text": "Remove all human review to eliminate the reviewer bottleneck and rely entirely on Amazon Bedrock Guardrails with content filters, denied topics, and sensitive information filters to enforce operational boundaries on agent actions across all risk tiers.",
                 "explanation": "Removing all human review produces unbounded autonomy. The Agentic AI Lens explicitly states that routing no actions through review is as problematic as routing all of them. Guardrails complement but do not replace human oversight for high-risk decisions.",
+                "references": [
+                    {
+                        "title": "AGENTSEC04-BP02: Human-in-the-loop for critical decisions",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsec04-bp02.html"
+                    }
+                ]
+            },
+            {
+                "id": "B",
+                "text": "Use an LLM as a risk classifier that evaluates each agent action against a risk rubric defined in the system prompt, routing high-risk actions to human review through Amazon SNS notifications while processing low-risk actions autonomously through the agent pipeline.",
+                "explanation": "The Agentic AI Lens explicitly warns against delegating risk classification to an LLM that is exposed to the same untrusted content as the request it evaluates. Adversarial content could influence the LLM classifier into marking a request as low-risk. Deterministic logic must be the authoritative signal.",
                 "references": [
                     {
                         "title": "AGENTSEC04-BP02: Human-in-the-loop for critical decisions",
@@ -233,19 +244,8 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "B",
-                "text": "Use an LLM to classify each agent action as low-risk or high-risk, and route high-risk actions to human review.",
-                "explanation": "The Agentic AI Lens explicitly warns against delegating risk classification to an LLM that is exposed to the same untrusted content as the request it evaluates. Adversarial content could influence the LLM classifier into marking a request as low-risk. Deterministic logic must be the authoritative signal.",
-                "references": [
-                    {
-                        "title": "AGENTSEC04-BP02: Human-in-the-loop for critical decisions",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsec04-bp02.html"
-                    }
-                ]
-            },
-            {
                 "id": "D",
-                "text": "Add a second AI agent to review the first agent's actions before execution.",
+                "text": "Add a second AI agent deployed on Amazon Bedrock AgentCore Runtime as a dedicated safety reviewer that evaluates every proposed action from the primary agent against a compliance policy before allowing execution to proceed.",
                 "explanation": "Agent-on-agent review does not constitute human oversight. While agent-based validation can be part of a defense-in-depth strategy, the Agentic AI Lens requires human-in-the-loop review for critical decisions, especially financial approvals that carry business risk.",
                 "references": [
                     {
@@ -262,7 +262,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Implement the arbiter agent pattern with a dedicated event-driven arbiter on Amazon Bedrock AgentCore Runtime that activates only for conflict resolution, stores conflict resolution policies in AWS Systems Manager Parameter Store, and escalates unresolvable conflicts to human review via Amazon SNS.",
+                "text": "Implement the arbiter agent pattern with a dedicated event-driven arbiter on AgentCore Runtime that activates only for conflict resolution, stores policies in AWS Systems Manager Parameter Store, and escalates unresolvable conflicts to human review.",
                 "explanation": "The Agentic AI Lens recommends the arbiter agent pattern for coordinated multi-agent systems. A dedicated arbiter that activates only for conflict resolution preserves agent autonomy for normal work while providing a single authoritative place to resolve contention. Policies stored externally can be updated without redeployment.",
                 "references": [
                     {
@@ -273,7 +273,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "B",
-                "text": "Add distributed locking using Amazon DynamoDB with conditional writes so agents acquire locks before accessing shared resources.",
+                "text": "Add distributed locking using Amazon DynamoDB with conditional writes and TTL-based lock expiration so agents acquire exclusive locks before accessing shared resources, and implement a priority queue with Amazon SQS FIFO to order competing access requests.",
                 "explanation": "While distributed locking prevents simultaneous access, it does not resolve the higher-level coordination problem of conflicting task plans between agents. Locks can still produce deadlocks when multiple agents need multiple resources. The Agentic AI Lens recommends a centralized arbiter for conflict resolution.",
                 "references": [
                     {
@@ -284,7 +284,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Embed conflict resolution logic inside each specialized agent so they can negotiate directly.",
+                "text": "Embed conflict resolution logic inside each specialized agent using a shared arbitration library, configure inter-agent negotiation protocols over Amazon EventBridge with schema validation, and define priority rankings per agent type in AWS AppConfig.",
                 "explanation": "The Agentic AI Lens identifies embedding conflict resolution logic inside specialized agents as an anti-pattern. It produces inconsistent arbitration across the system because each agent implements its own resolution strategy, and it makes specialized agents more complex and harder to maintain.",
                 "references": [
                     {
@@ -312,7 +312,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Create Amazon CloudWatch dashboards for Lambda invocation counts and error rates.",
+                "text": "Create Amazon CloudWatch dashboards with custom widgets for Lambda invocation counts, error rates, duration percentiles, concurrent executions, and throttle counts, and configure composite alarms for each agent's infrastructure metrics.",
                 "explanation": "Infrastructure metrics like Lambda invocation counts only explain whether an agent is running, not whether it is working correctly. The Agentic AI Lens identifies instrumentation of only infrastructure metrics as the Initial maturity level (Level 1) and a common issue.",
                 "references": [
                     {
@@ -334,7 +334,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Enable Amazon CloudWatch anomaly detection for all existing metrics.",
+                "text": "Enable Amazon CloudWatch anomaly detection for all existing infrastructure metrics including Lambda duration, API Gateway latency, SQS queue depth, and DynamoDB consumed capacity units to automatically flag deviations from normal patterns.",
                 "explanation": "Anomaly detection on infrastructure metrics alone misses behavioral anomalies specific to agent reasoning. The Agentic AI Lens positions behavioral baselines and anomaly detection (AGENTOPS05-BP02) as building on end-to-end tracing, not as a substitute for it.",
                 "references": [
                     {
@@ -345,7 +345,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Implement structured logging for agent outputs only.",
+                "text": "Implement structured JSON logging for agent outputs only using Amazon CloudWatch Logs with defined log groups per agent, configure metric filters for error keywords, and set up a Logs Insights saved query dashboard.",
                 "explanation": "Logging only outputs misses the reasoning chain, tool invocations, and memory operations that explain why an output was produced. The Agentic AI Lens requires comprehensive tracing of the full execution path, not just inputs and outputs.",
                 "references": [
                     {
@@ -362,30 +362,8 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Set a maximum response time limit at the API Gateway level to kill long-running requests.",
+                "text": "Set a maximum response time limit of 15 seconds at the API Gateway level using integration timeout settings, configure a custom 504 error response with retry guidance, and add an Amazon CloudWatch alarm on the 5XX error rate to detect when timeouts become frequent.",
                 "explanation": "Killing requests at the API Gateway level produces failed responses rather than optimized ones. The root cause — unbounded reasoning iterations — remains unaddressed. The Agentic AI Lens focuses on designing the reasoning pipeline itself to be efficient.",
-                "references": [
-                    {
-                        "title": "AGENTPERF02-BP01: Design efficient reasoning pipelines",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentperf02-bp01.html"
-                    }
-                ]
-            },
-            {
-                "id": "D",
-                "text": "Design an efficient reasoning pipeline with bounded iteration limits and confidence-based early termination, so simple tasks resolve in one or two iterations while complex tasks receive the iterations they need, with retries bounded by explicit latency and token budgets.",
-                "explanation": "The Agentic AI Lens recommends designing efficient reasoning pipelines with iteration caps and confidence-based early termination. Each iteration of the perceive-reason-act loop involves an LLM inference call, so the number of iterations multiplies both latency and cost. An efficient pipeline reaches accurate decisions in the fewest iterations the task requires.",
-                "references": [
-                    {
-                        "title": "AGENTPERF02-BP01: Design efficient reasoning pipelines",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentperf02-bp01.html"
-                    }
-                ]
-            },
-            {
-                "id": "C",
-                "text": "Move to a larger, faster model with higher throughput to reduce per-iteration latency.",
-                "explanation": "A larger model does not address the root cause of unbounded iterations. Even with faster per-iteration processing, an agent that reasons for 30+ unnecessary iterations will still be slow and expensive. The Agentic AI Lens recommends bounding iterations as the primary control.",
                 "references": [
                     {
                         "title": "AGENTPERF02-BP01: Design efficient reasoning pipelines",
@@ -403,6 +381,28 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                         "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp03.html"
                     }
                 ]
+            },
+            {
+                "id": "C",
+                "text": "Move to a larger, faster model with higher throughput to reduce per-iteration latency, enable Amazon Bedrock latency-optimized inference for the selected model, and configure Amazon Bedrock Provisioned Throughput to guarantee consistent inference speed under load.",
+                "explanation": "A larger model does not address the root cause of unbounded iterations. Even with faster per-iteration processing, an agent that reasons for 30+ unnecessary iterations will still be slow and expensive. The Agentic AI Lens recommends bounding iterations as the primary control.",
+                "references": [
+                    {
+                        "title": "AGENTPERF02-BP01: Design efficient reasoning pipelines",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentperf02-bp01.html"
+                    }
+                ]
+            },
+            {
+                "id": "D",
+                "text": "Design an efficient reasoning pipeline with bounded iteration limits and confidence-based early termination, so simple tasks resolve quickly while complex tasks get the iterations they need, with retries bounded by explicit latency and token budgets.",
+                "explanation": "The Agentic AI Lens recommends designing efficient reasoning pipelines with iteration caps and confidence-based early termination. Each iteration of the perceive-reason-act loop involves an LLM inference call, so the number of iterations multiplies both latency and cost. An efficient pipeline reaches accurate decisions in the fewest iterations the task requires.",
+                "references": [
+                    {
+                        "title": "AGENTPERF02-BP01: Design efficient reasoning pipelines",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentperf02-bp01.html"
+                    }
+                ]
             }
         ],
         "correct_answer": "D"
@@ -412,7 +412,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Use Amazon Bedrock AgentCore Identity for agent workload identities, route human operators through AWS IAM Identity Center, and apply Service Control Policies (SCPs) in AWS Organizations to prevent agents from assuming human-designated roles.",
+                "text": "Use AgentCore Identity for agent workload identities, route human operators through IAM Identity Center, and apply SCPs in AWS Organizations to prevent agents from assuming human-designated roles.",
                 "explanation": "The Agentic AI Lens recommends separating agent and human permission spaces at the identity layer. AgentCore Identity centralizes agent identities, IAM Identity Center handles human access, and SCPs enforce hard trust boundaries preventing agents from assuming human roles. This makes audit attribution unambiguous.",
                 "references": [
                     {
@@ -423,7 +423,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "B",
-                "text": "Tag all agent IAM roles with a key-value pair and filter CloudTrail logs by tag during audits.",
+                "text": "Tag all agent IAM roles with a standardized key-value pair (e.g., identity-type=agent), configure AWS Config rules to enforce tagging compliance, create Amazon Athena queries against CloudTrail logs to filter agent actions by tag, and review audit reports quarterly.",
                 "explanation": "Tagging is a useful organizational practice but does not enforce separation. Without trust policy constraints and SCPs, agents can still assume human roles regardless of tags. Tags help with visibility but do not prevent the cross-assumption problem identified in the audit.",
                 "references": [
                     {
@@ -434,7 +434,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Create a naming convention that prefixes agent roles with 'agent-' and human roles with 'human-'.",
+                "text": "Create a naming convention that prefixes agent roles with 'agent-' and human roles with 'human-', enforce the convention through an AWS CloudFormation stack policy and SCP that denies CreateRole actions for names not matching the pattern.",
                 "explanation": "Naming conventions provide documentation clarity but do not enforce security boundaries. Without SCPs and trust policy restrictions, a naming convention alone cannot prevent an agent from assuming any role it has permissions to assume.",
                 "references": [
                     {
@@ -484,7 +484,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Migrate to a more expensive model that processes tokens faster.",
+                "text": "Migrate to a more expensive, higher-throughput model tier using Amazon Bedrock Provisioned Throughput with a one-year commitment, and configure Amazon CloudWatch dashboards to monitor the token-per-second utilization rate across all agent invocations.",
                 "explanation": "A faster model does not reduce the number of tokens being processed. The root cause is bloated prompts and unnecessary tool descriptions consuming tokens on every invocation. The Agentic AI Lens addresses token consumption efficiency, not processing speed.",
                 "references": [
                     {
@@ -495,7 +495,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Increase the number of agents so each handles fewer requests.",
+                "text": "Increase the number of agents in the fleet using Amazon Bedrock AgentCore Runtime auto-scaling policies so each agent handles fewer requests, and distribute the existing system prompt and tool catalog equally across all agent instances.",
                 "explanation": "Adding more agents does not reduce token consumption per invocation. Each agent would still process the same bloated system prompt and full tool catalog, so total token consumption would remain the same or increase due to overhead.",
                 "references": [
                     {
@@ -515,8 +515,19 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Prompt instructions are sufficient for alignment if the system prompt is well-crafted and regularly tested.",
+                "text": "Prompt instructions are sufficient for alignment if the system prompt is well-crafted, regularly tested through Amazon Bedrock AgentCore Evaluations, and versioned in AWS CodeCommit with automated regression testing in the CI/CD pipeline.",
                 "explanation": "The Agentic AI Lens explicitly identifies treating alignment as a prompt-engineering exercise as a common anti-pattern. A single adversarial input that influences the model can collapse multiple prompt-based boundaries at once because instruction-following does not provide reliable enforcement.",
+                "references": [
+                    {
+                        "title": "AGENTSEC04-BP01: Implement guardrails and alignment controls",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsec04-bp01.html"
+                    }
+                ]
+            },
+            {
+                "id": "B",
+                "text": "Deploy a second LLM as a dedicated safety filter on Amazon Bedrock that independently evaluates all agent outputs against a compliance rubric before they reach the user, with a separate guardrail profile tuned for high-sensitivity content detection.",
+                "explanation": "While output filtering is part of a defense-in-depth strategy, a single LLM filter alone is insufficient. The Agentic AI Lens requires layered controls at every stage: input, inference, output, and tool invocation. Deterministic controls must be the foundation, not another LLM.",
                 "references": [
                     {
                         "title": "AGENTSEC04-BP01: Implement guardrails and alignment controls",
@@ -536,19 +547,8 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "B",
-                "text": "Deploy a second LLM as a safety filter that checks all agent outputs before they reach the user.",
-                "explanation": "While output filtering is part of a defense-in-depth strategy, a single LLM filter alone is insufficient. The Agentic AI Lens requires layered controls at every stage: input, inference, output, and tool invocation. Deterministic controls must be the foundation, not another LLM.",
-                "references": [
-                    {
-                        "title": "AGENTSEC04-BP01: Implement guardrails and alignment controls",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsec04-bp01.html"
-                    }
-                ]
-            },
-            {
                 "id": "D",
-                "text": "Apply Amazon Bedrock Guardrails only on model outputs to filter harmful content before it reaches the user.",
+                "text": "Apply Amazon Bedrock Guardrails only on model outputs with content filters set to HIGH strength for all six categories (hate, insults, sexual, violence, misconduct, and prompt attack), and configure custom word filters for domain-specific blocked terms.",
                 "explanation": "The Agentic AI Lens specifically calls out applying content filtering only to outputs as a common issue. This leaves the inference path open to prompt injection and wastes capacity processing adversarial inputs that could have been rejected up front. Guardrails should be applied to both inputs and outputs.",
                 "references": [
                     {
@@ -565,7 +565,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Move the agent to a larger compute instance to reduce processing time.",
+                "text": "Move the agent to a larger compute instance type (e.g., from m6i.xlarge to m6i.4xlarge) to reduce processing time, enable enhanced networking with Elastic Fabric Adapter, and configure Amazon CloudWatch to track CPU and memory utilization.",
                 "explanation": "Agent perceived latency is dominated by time-to-first-token (TTFT), not total compute time. A larger instance does not change the fundamental issue of buffering the complete response before delivery. The Agentic AI Lens distinguishes between total processing time and perceived latency.",
                 "references": [
                     {
@@ -575,9 +575,9 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "D",
-                "text": "Implement streaming delivery with sub-second time-to-first-token using Amazon Bedrock streaming APIs, compress pre-inference work to preserve the TTFT budget, and surface progress events during tool invocations to avoid unexplained pauses.",
-                "explanation": "The Agentic AI Lens states that user-facing agents are judged on perceived latency, not total processing time. TTFT is the dominant perceived-performance signal. Streaming keeps TTFT short even when total processing takes seconds. Progress events during tool invocations prevent the unexplained silences that users perceive as stalls.",
+                "id": "B",
+                "text": "Add a loading spinner and a real-time progress bar to the user interface using WebSocket connections from the frontend to the agent backend, and display an estimated time remaining calculated from historical response-time percentiles per query category.",
+                "explanation": "A loading spinner is a UX improvement but does not change the fundamental latency problem. The Agentic AI Lens recommends streaming delivery to reduce perceived latency by showing the response as it is generated, which is architecturally different from simply indicating that processing is ongoing.",
                 "references": [
                     {
                         "title": "AGENTPERF02-BP04: Optimize streaming responses and time-to-first-token for agent interactions",
@@ -587,7 +587,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Cache all responses so that repeat queries return instantly.",
+                "text": "Cache all responses in Amazon ElastiCache for Redis with a 24-hour TTL so that repeat queries return instantly, implement cache-key hashing based on normalized prompt content, and configure cache eviction policies using LRU.",
                 "explanation": "Caching helps only for repeated identical queries. For new queries, which represent the majority of user interactions, the agent still buffers the complete response. The Agentic AI Lens identifies streaming delivery as the practice that addresses perceived latency for all queries.",
                 "references": [
                     {
@@ -597,9 +597,9 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "B",
-                "text": "Add a loading spinner to the user interface while the agent processes the request.",
-                "explanation": "A loading spinner is a UX improvement but does not change the fundamental latency problem. The Agentic AI Lens recommends streaming delivery to reduce perceived latency by showing the response as it is generated, which is architecturally different from simply indicating that processing is ongoing.",
+                "id": "D",
+                "text": "Implement streaming delivery with sub-second time-to-first-token using Bedrock streaming APIs, compress pre-inference work to preserve the TTFT budget, and surface progress events during tool invocations.",
+                "explanation": "The Agentic AI Lens states that user-facing agents are judged on perceived latency, not total processing time. TTFT is the dominant perceived-performance signal. Streaming keeps TTFT short even when total processing takes seconds. Progress events during tool invocations prevent the unexplained silences that users perceive as stalls.",
                 "references": [
                     {
                         "title": "AGENTPERF02-BP04: Optimize streaming responses and time-to-first-token for agent interactions",
@@ -615,7 +615,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Design specialized agents following actor model principles, where each agent encapsulates one atomic capability, owns its state, and communicates through messages, keeping the impact of failures proportional to the scope of the failing component.",
+                "text": "Design specialized agents following actor model principles, where each agent encapsulates one atomic capability, owns its state, and communicates through messages, isolating failure impact.",
                 "explanation": "The Agentic AI Lens recommends designing specialized agents that each own a single capability, their own state, and a narrow permission scope. This follows actor model principles where failures are isolated to the agent that encountered them and the broader environment continues running.",
                 "references": [
                     {
@@ -626,7 +626,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "B",
-                "text": "Merge all agents into one comprehensive agent with full capabilities to simplify the architecture.",
+                "text": "Merge all agents into one comprehensive agent with full capabilities deployed on Amazon Bedrock AgentCore Runtime, using a single system prompt that covers all domains and a unified action group with all tools registered in AgentCore Gateway.",
                 "explanation": "A monolithic agent concentrates risk. The Agentic AI Lens identifies multi-purpose agents as a reliability risk because a single failure in one function affects every other function in the same process. The recommendation is to split, not merge.",
                 "references": [
                     {
@@ -648,7 +648,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Deploy redundant copies of each multi-purpose agent for high availability.",
+                "text": "Deploy redundant copies of each multi-purpose agent across multiple Availability Zones using Amazon Bedrock AgentCore Runtime auto-scaling with health checks, ensuring at least three replicas per agent with automatic failover.",
                 "explanation": "Redundancy addresses availability of a single agent but does not address the blast radius problem. If a multi-purpose agent fails, the redundant copy has the same failure modes because the agents share the same architecture. The Agentic AI Lens recommends specialization to reduce blast radius.",
                 "references": [
                     {
@@ -665,7 +665,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Use Amazon Bedrock AgentCore Identity's GetWorkloadAccessTokenForJWT to embed user context as claims in the agent's token, so downstream services enforce user-level authorization without the agent holding the user's credentials.",
+                "text": "Use AgentCore Identity's GetWorkloadAccessTokenForJWT to embed user context as claims in the agent's token, so downstream services enforce user-level authorization without the agent holding user credentials.",
                 "explanation": "The Agentic AI Lens recommends propagating user context as signed token claims through the agent's call chain. This approach keeps audit attribution unambiguous (the agent identity is separate from the user context) and limits the agent's access to what the downstream service grants for that user context, not the user's full permission set.",
                 "references": [
                     {
@@ -676,7 +676,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "B",
-                "text": "Have the agent store the user's credentials in AWS Secrets Manager and retrieve them when needed.",
+                "text": "Have the agent store the user's credentials in AWS Secrets Manager with automatic rotation enabled, retrieve them using the GetSecretValue API at the start of each session, and pass them as environment variables to downstream service calls.",
                 "explanation": "Storing and using user credentials directly gives the agent full access under the user's identity. The Agentic AI Lens identifies this pattern as an anti-pattern because it collapses the audit trail and gives the agent the user's full permission set.",
                 "references": [
                     {
@@ -698,7 +698,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Configure the agent to use AssumeRole with the user's IAM role but with a shorter session duration.",
+                "text": "Configure the agent to use STS AssumeRole with the user's IAM role but with a shorter 15-minute session duration, add the aws:SourceIdentity condition key to propagate the agent's name, and log all assumed-role sessions to CloudTrail.",
                 "explanation": "Shorter session duration reduces the time window but does not solve the fundamental problem identified by the Agentic AI Lens: assuming the user's role collapses the audit trail and gives the agent the user's full permission set. The user context should be carried as claims, not assumed as credentials.",
                 "references": [
                     {
@@ -737,7 +737,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Deploy each agent with three replicas to ensure at least one is always available.",
+                "text": "Deploy each agent with three replicas across multiple Availability Zones using Amazon Bedrock AgentCore Runtime auto-scaling, configure Application Load Balancer health checks with 10-second intervals, and set up automatic replacement of unhealthy instances.",
                 "explanation": "While replication improves availability of individual agents, it does not address the architectural issue of hardcoded identifiers in the orchestrator. If the orchestrator only knows about a specific agent ID and that agent type is completely unavailable, replicas of the same type won't help if the issue affects all instances.",
                 "references": [
                     {
@@ -748,7 +748,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Increase the orchestrator's retry count and timeout values to give agents more time to recover.",
+                "text": "Increase the orchestrator's retry count to 5 attempts with exponential backoff starting at 2 seconds, extend timeout values to 120 seconds per agent call, and add Amazon CloudWatch alarms on retry rate to detect persistent failures.",
                 "explanation": "Longer retries and timeouts delay failure recognition rather than enabling graceful degradation. The Agentic AI Lens recommends capability-based routing and fallback chains as the solution to agent unavailability, not simply waiting longer for a failed agent to recover.",
                 "references": [
                     {
@@ -768,7 +768,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Encrypt the S3 bucket with AWS KMS and enable versioning.",
+                "text": "Encrypt the S3 bucket with a customer-managed AWS KMS key, enable S3 versioning with MFA delete protection, configure S3 lifecycle rules to transition logs to Glacier Deep Archive after 90 days, and restrict bucket access through a VPC endpoint policy.",
                 "explanation": "While encryption and versioning improve security, versioning does not prevent deletion or modification of the current version. The Agentic AI Lens specifically recommends immutability through S3 Object Lock in compliance mode, which provides a stronger guarantee that records cannot be altered.",
                 "references": [
                     {
@@ -790,7 +790,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Move audit trails to Amazon CloudWatch Logs with a 10-year retention policy.",
+                "text": "Move audit trails to Amazon CloudWatch Logs with a 10-year retention policy, configure a subscription filter to stream logs to Amazon OpenSearch Service for full-text search, and create CloudWatch Logs Insights queries for compliance reporting.",
                 "explanation": "CloudWatch Logs provides durable storage with retention policies, but the Agentic AI Lens specifically identifies the need for immutable storage that cannot be altered after the fact. CloudWatch Logs retention policies control how long data is kept, not whether it can be modified.",
                 "references": [
                     {
@@ -801,7 +801,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Restrict write access to audit trail S3 buckets to only the agent service role.",
+                "text": "Restrict write access to audit trail S3 buckets using a bucket policy that allows only the agent service role to PutObject, deny all DeleteObject actions via an explicit deny statement, and enable S3 server access logging to a separate audit bucket.",
                 "explanation": "Restricting write access reduces the risk of tampering but does not make logs immutable. The agent service role (or an administrator) could still modify or delete records. The Agentic AI Lens recommends S3 Object Lock in compliance mode for tamper-proof audit trails.",
                 "references": [
                     {
@@ -818,30 +818,8 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Increase the cache size on each individual agent instance.",
+                "text": "Increase the cache size on each individual agent instance to 10 GB using Amazon ElastiCache for Redis with read replicas, implement a cache-aside pattern with TTL-based expiration, and add CloudWatch metrics for hit rate monitoring per instance.",
                 "explanation": "Larger per-instance caches still keep cache isolated to each agent. The Agentic AI Lens identifies treating each agent as an isolated system with its own cache as a common anti-pattern that misses fleet-wide amortization opportunities.",
-                "references": [
-                    {
-                        "title": "AGENTSUS02-BP02: Establish efficient agent caching strategies",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsus02-bp02.html"
-                    }
-                ]
-            },
-            {
-                "id": "D",
-                "text": "Establish shared caches exposed through Amazon Bedrock AgentCore Gateway that amortize work across the agent fleet, so one cache hit provides savings for every agent that asks the same question.",
-                "explanation": "The Agentic AI Lens recommends shared caches that amortize work across the entire agent fleet. Every duplicate model call, tool invocation, and memory lookup is work the fleet has already done once. Shared caches turn repeated work into a one-time cost, and resource efficiency improves as usage patterns stabilize.",
-                "references": [
-                    {
-                        "title": "AGENTSUS02-BP02: Establish efficient agent caching strategies",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsus02-bp02.html"
-                    }
-                ]
-            },
-            {
-                "id": "C",
-                "text": "Disable caching entirely to simplify the architecture and rely on model inference scaling.",
-                "explanation": "Disabling caching means every query pays the full model inference cost, even for identical or semantically equivalent requests. The Agentic AI Lens recommends caching at each integration point as a fundamental sustainability practice.",
                 "references": [
                     {
                         "title": "AGENTSUS02-BP02: Establish efficient agent caching strategies",
@@ -859,6 +837,28 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                         "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsus02-bp02.html"
                     }
                 ]
+            },
+            {
+                "id": "C",
+                "text": "Disable caching entirely to simplify the architecture and rely on Amazon Bedrock on-demand inference scaling with cross-region inference enabled, using auto-scaling policies to handle increased load from repeated identical queries.",
+                "explanation": "Disabling caching means every query pays the full model inference cost, even for identical or semantically equivalent requests. The Agentic AI Lens recommends caching at each integration point as a fundamental sustainability practice.",
+                "references": [
+                    {
+                        "title": "AGENTSUS02-BP02: Establish efficient agent caching strategies",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsus02-bp02.html"
+                    }
+                ]
+            },
+            {
+                "id": "D",
+                "text": "Establish shared caches exposed through Amazon Bedrock AgentCore Gateway that amortize work across the agent fleet, so one cache hit provides savings for every agent that asks the same question.",
+                "explanation": "The Agentic AI Lens recommends shared caches that amortize work across the entire agent fleet. Every duplicate model call, tool invocation, and memory lookup is work the fleet has already done once. Shared caches turn repeated work into a one-time cost, and resource efficiency improves as usage patterns stabilize.",
+                "references": [
+                    {
+                        "title": "AGENTSUS02-BP02: Establish efficient agent caching strategies",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentsus02-bp02.html"
+                    }
+                ]
             }
         ],
         "correct_answer": "D"
@@ -868,7 +868,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Disable anomaly detection to eliminate false positive alert fatigue.",
+                "text": "Disable anomaly detection entirely to eliminate false positive alert fatigue, and replace it with static CloudWatch alarms on fixed thresholds for key agent metrics such as error rate, latency percentiles, and invocation count.",
                 "explanation": "Disabling anomaly detection removes the ability to detect genuine behavioral drift and performance degradation. The Agentic AI Lens recommends improving baseline management, not removing the detection capability entirely.",
                 "references": [
                     {
@@ -879,7 +879,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "B",
-                "text": "Widen the anomaly detection thresholds to reduce false positives.",
+                "text": "Widen the anomaly detection thresholds by increasing the standard deviation band from 2 to 4 on all CloudWatch Anomaly Detection models, and suppress alerts during a 48-hour grace period after each deployment to avoid false positives.",
                 "explanation": "Wider thresholds reduce false positives but also reduce detection sensitivity. This approach treats the symptom rather than the cause: stale baselines. The Agentic AI Lens requires baselines that adapt to legitimate evolution while detecting genuine drift.",
                 "references": [
                     {
@@ -890,7 +890,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Continually maintain behavioral baselines using Amazon CloudWatch Anomaly Detection, with baselines that adjust automatically and anomaly detection that distinguishes between data drift, concept drift, and performance drift, annotated with deployment events to correlate metric changes with configuration changes.",
+                "text": "Continually maintain behavioral baselines using CloudWatch Anomaly Detection with automatic adjustment, distinguish between data drift, concept drift, and performance drift, and annotate dashboards with deployment events to correlate metric changes with configuration changes.",
                 "explanation": "The Agentic AI Lens recommends continually maintained baselines that adapt to legitimate behavioral evolution. CloudWatch Anomaly Detection provides automatic baseline adjustment. Distinguishing drift types and correlating with deployment events prevents both false positives from legitimate changes and undetected gradual degradation.",
                 "references": [
                     {
@@ -901,7 +901,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Reset the baselines manually after every deployment and ignore alerts between deployments.",
+                "text": "Reset the baselines manually after every deployment using a CloudFormation custom resource that triggers a Lambda function to clear CloudWatch Anomaly Detection models, and configure a suppression rule to ignore all anomaly alerts for the first 72 hours after each deployment.",
                 "explanation": "Manual baseline resets and ignoring alerts creates gaps in monitoring coverage. The Agentic AI Lens identifies stale baselines as a common issue and recommends automatic, continuous baseline maintenance rather than periodic manual resets.",
                 "references": [
                     {
@@ -918,7 +918,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Build a universal translation service that converts between all custom formats.",
+                "text": "Build a universal translation service using AWS Lambda and Amazon API Gateway that accepts messages in any custom format, maps them through a centralized schema definition stored in Amazon DynamoDB, and converts them to the target agent's expected format at runtime.",
                 "explanation": "A universal translator adds complexity and becomes a bottleneck and single point of failure. The Agentic AI Lens recommends standardizing the protocols themselves rather than adding a translation layer on top of disparate formats.",
                 "references": [
                     {
@@ -940,7 +940,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Reduce the number of agents to minimize the number of integration points.",
+                "text": "Reduce the number of agents to minimize integration points by consolidating specialized agents into multi-purpose agents that handle multiple domains, using a single system prompt with conditional logic to route between capabilities within each agent.",
                 "explanation": "Reducing agents may simplify integration but limits the system's capabilities and violates the Agentic AI Lens principle of specialized agents. The root issue is the lack of standardized protocols, not the number of agents.",
                 "references": [
                     {
@@ -951,7 +951,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Document each agent's custom message format in a shared wiki for reference.",
+                "text": "Document each agent's custom message format in a shared Confluence wiki with detailed schema specifications, example payloads, versioning history, and integration guides for each agent pair, and assign ownership of each integration document to the responsible team.",
                 "explanation": "Documentation helps developers understand formats but does not reduce the implementation burden of building translation layers. The Agentic AI Lens recommends protocol standardization to eliminate the need for per-pair integration work entirely.",
                 "references": [
                     {
@@ -968,7 +968,7 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Fine-tune models for all agent tasks to maximize quality across the board.",
+                "text": "Fine-tune models for all agent tasks across every category to maximize quality uniformly, using Amazon Bedrock custom model training with data from production logs for each task type, and deploy all customized models through Custom Model Import.",
                 "explanation": "The Agentic AI Lens warns against pursuing model customization on low-volume workloads. Customization math only works when volume and task stability are high enough to justify the investment. Training cost for low-volume tasks may never amortize.",
                 "references": [
                     {
@@ -978,19 +978,8 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
-                "id": "C",
-                "text": "Start with a break-even calculation to determine whether volume and task stability justify the training investment, and focus customization on high-volume recurring tasks where the one-time training cost amortizes across sustained per-invocation savings.",
-                "explanation": "The Agentic AI Lens recommends that model customization decisions start with a break-even calculation, not enthusiasm for fine-tuning. Customizing smaller models for high-volume recurring tasks optimizes per-invocation costs into a one-time training expense. The math only works when volume and task stability are high enough to justify the investment.",
-                "references": [
-                    {
-                        "title": "AGENTCOST02-BP04: Implement model customization for long-term cost reduction",
-                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp04.html"
-                    }
-                ]
-            },
-            {
                 "id": "B",
-                "text": "Avoid model customization entirely and rely on prompt engineering for all tasks.",
+                "text": "Avoid model customization entirely and rely exclusively on prompt engineering, few-shot examples, and chain-of-thought reasoning techniques for all task categories, iterating on prompts through A/B testing with Amazon Bedrock AgentCore Evaluations.",
                 "explanation": "The Agentic AI Lens recognizes model customization as a valid cost optimization strategy for the right workloads. Avoiding it entirely means missing potential savings on high-volume tasks where training cost would quickly amortize.",
                 "references": [
                     {
@@ -1000,8 +989,19 @@ export const SET_P05_QUESTIONS: RawQuestion[] = [
                 ]
             },
             {
+                "id": "C",
+                "text": "Start with a break-even calculation on volume and task stability, and focus customization on high-volume recurring tasks where the one-time training cost amortizes across sustained per-invocation savings.",
+                "explanation": "The Agentic AI Lens recommends that model customization decisions start with a break-even calculation, not enthusiasm for fine-tuning. Customizing smaller models for high-volume recurring tasks optimizes per-invocation costs into a one-time training expense. The math only works when volume and task stability are high enough to justify the investment.",
+                "references": [
+                    {
+                        "title": "AGENTCOST02-BP04: Implement model customization for long-term cost reduction",
+                        "url": "https://docs.aws.amazon.com/wellarchitected/latest/agentic-ai-lens/agentcost02-bp04.html"
+                    }
+                ]
+            },
+            {
                 "id": "D",
-                "text": "Fine-tune the largest available model to get the best quality for customized tasks.",
+                "text": "Fine-tune the largest available model in the Amazon Bedrock model catalog to achieve the highest possible quality for customized tasks, using Amazon Bedrock custom model training with Provisioned Throughput for serving the fine-tuned model at scale.",
                 "explanation": "The Agentic AI Lens recommends customizing smaller models, not the largest ones. The goal is to bring a small model's quality up to acceptable levels for a specific task at lower per-invocation cost, not to further optimize an already expensive large model.",
                 "references": [
                     {

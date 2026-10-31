@@ -6,19 +6,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "A managed ML training platform for custom models"
-            },
-            {
-                "id": "D",
-                "text": "An agentic platform to build, deploy, and operate AI agents securely at scale using any framework or model"
-            },
-            {
-                "id": "C",
-                "text": "A vector database for storing embeddings"
+                "text": "A managed ML training and hyperparameter tuning platform for building custom foundation models from scratch"
             },
             {
                 "id": "B",
-                "text": "A prompt management console for foundation models"
+                "text": "A centralized prompt management and versioning console integrated with Amazon CloudWatch for observability"
+            },
+            {
+                "id": "C",
+                "text": "A fully managed vector database service for storing and querying high-dimensional embeddings at scale"
+            },
+            {
+                "id": "D",
+                "text": "A platform to build, deploy, and operate AI agents at scale using any framework or model"
             }
         ],
         "correct_answer": "D",
@@ -51,20 +51,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What is the primary purpose of Amazon Bedrock Guardrails?",
         "options": [
             {
-                "id": "B",
-                "text": "Optimize model inference latency"
+                "id": "A",
+                "text": "Detect and filter undesirable content and protect sensitive information"
             },
             {
-                "id": "A",
-                "text": "Detect and filter undesirable content and protect sensitive information in inputs and outputs"
+                "id": "B",
+                "text": "Optimize model inference latency by caching frequent requests and pre-warming model endpoints across regions"
             },
             {
                 "id": "C",
-                "text": "Manage agent deployment infrastructure"
+                "text": "Manage agent deployment infrastructure including compute provisioning, scaling, and health monitoring"
             },
             {
                 "id": "D",
-                "text": "Route requests between multiple models"
+                "text": "Route requests between multiple foundation models using weighted traffic distribution and failover rules"
             }
         ],
         "correct_answer": "A",
@@ -75,19 +75,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "A technique for fine-tuning models on custom data"
-            },
-            {
-                "id": "C",
-                "text": "A method that retrieves relevant external information and includes it in the model's context to improve accuracy"
+                "text": "A supervised fine-tuning technique that adapts pre-trained models on domain-specific labeled datasets for better accuracy"
             },
             {
                 "id": "B",
-                "text": "A model compression technique to reduce inference cost"
+                "text": "A model compression technique using knowledge distillation and quantization to reduce inference cost at scale"
+            },
+            {
+                "id": "C",
+                "text": "A method that retrieves relevant external information and includes it in the model's context"
             },
             {
                 "id": "D",
-                "text": "A way to chain multiple model calls sequentially"
+                "text": "A prompt chaining technique that sequences multiple model calls with intermediate validation steps"
             }
         ],
         "correct_answer": "C",
@@ -98,19 +98,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "RAG that uses larger embedding models"
-            },
-            {
-                "id": "D",
-                "text": "RAG where the agent actively controls the retrieval process, deciding when, what, and how to retrieve iteratively"
-            },
-            {
-                "id": "C",
-                "text": "RAG that stores results in a relational database"
+                "text": "RAG that uses larger embedding models with higher-dimensional vector spaces for more precise semantic matching"
             },
             {
                 "id": "B",
-                "text": "RAG that only works with Amazon Bedrock models"
+                "text": "RAG that exclusively works with Amazon Bedrock models and Knowledge Bases using OpenSearch Serverless indexes"
+            },
+            {
+                "id": "C",
+                "text": "RAG that persists retrieved results in Amazon DynamoDB tables with TTL-based expiration for caching"
+            },
+            {
+                "id": "D",
+                "text": "RAG where the agent actively controls retrieval, deciding when and what to retrieve iteratively"
             }
         ],
         "correct_answer": "D",
@@ -144,19 +144,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Total time to generate a complete response"
+                "text": "Total wall-clock time from request submission to receiving the complete generated response including all tokens"
+            },
+            {
+                "id": "B",
+                "text": "The inter-token latency measuring the average delay between generating consecutive output tokens"
+            },
+            {
+                "id": "C",
+                "text": "The cold-start time required to load model weights from Amazon S3 into accelerator memory before inference"
             },
             {
                 "id": "D",
                 "text": "Time between submitting a request and receiving the first output token"
-            },
-            {
-                "id": "C",
-                "text": "Time to load the model into memory"
-            },
-            {
-                "id": "B",
-                "text": "Time between consecutive token generations"
             }
         ],
         "correct_answer": "D",
@@ -167,7 +167,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "An agent that performs all tasks for other agents"
+                "text": "An agent that performs all tasks for other agents and acts as a centralized processing gateway in the system"
             },
             {
                 "id": "B",
@@ -175,11 +175,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "An agent that monitors system performance"
+                "text": "An agent that continuously monitors system performance metrics and triggers CloudWatch alarms on anomalies"
             },
             {
                 "id": "D",
-                "text": "An agent that handles all user-facing communication"
+                "text": "An agent that handles all user-facing communication and translates between natural language and agent protocols"
             }
         ],
         "correct_answer": "B",
@@ -189,20 +189,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What is prompt injection?",
         "options": [
             {
-                "id": "B",
-                "text": "Adding more examples to improve model accuracy"
+                "id": "A",
+                "text": "Input content that attempts to override agent instructions or cause unauthorized actions"
             },
             {
-                "id": "A",
-                "text": "Content in an agent's input that attempts to override instructions or cause unauthorized actions"
+                "id": "B",
+                "text": "A few-shot prompting technique that adds curated examples to the system prompt for improved model accuracy"
             },
             {
                 "id": "C",
-                "text": "Injecting cached responses into a prompt for speed"
+                "text": "Pre-loading cached API responses into the agent context window to reduce downstream tool invocation latency"
             },
             {
                 "id": "D",
-                "text": "Dynamically loading tool descriptions into the system prompt"
+                "text": "Dynamically loading tool descriptions and action group definitions into the system prompt at invocation time"
             }
         ],
         "correct_answer": "A",
@@ -213,19 +213,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "A protocol for compressing model weights during inference"
+                "text": "A protocol for compressing and quantizing model weights during distributed inference across multiple accelerators"
+            },
+            {
+                "id": "B",
+                "text": "A standardized format for storing multi-turn conversation history with token-level timestamps and metadata"
+            },
+            {
+                "id": "C",
+                "text": "An encryption protocol for signing and verifying inter-agent messages using AWS KMS asymmetric keys"
             },
             {
                 "id": "D",
                 "text": "An open standard for connecting AI agents to external tools, data sources, and services"
-            },
-            {
-                "id": "C",
-                "text": "A security protocol for encrypting agent-to-agent messages"
-            },
-            {
-                "id": "B",
-                "text": "A format for storing conversation history"
             }
         ],
         "correct_answer": "D",
@@ -236,11 +236,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Content filters"
+                "text": "Content filters that detect hate, insults, sexual, and violence categories in text and images"
             },
             {
                 "id": "B",
-                "text": "Denied topics"
+                "text": "Denied topics that block user-defined subjects using semantic matching on inputs and outputs"
             },
             {
                 "id": "C",
@@ -248,7 +248,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Word filters"
+                "text": "Word filters that use case-insensitive whole-word and whole-phrase exact matching on custom terms"
             }
         ],
         "correct_answer": "C",
@@ -259,19 +259,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "The tendency of models to produce identical outputs for the same input"
-            },
-            {
-                "id": "D",
-                "text": "The inherent randomness causing the same input to produce different outputs across invocations"
-            },
-            {
-                "id": "C",
-                "text": "A model's ability to process multiple tasks simultaneously"
+                "text": "The deterministic property where models consistently produce identical outputs for the same input and temperature"
             },
             {
                 "id": "B",
-                "text": "The speed at which tokens are generated"
+                "text": "The tokens-per-second throughput rate at which the model generates output during streaming inference"
+            },
+            {
+                "id": "C",
+                "text": "A model's built-in ability to process multiple independent tasks simultaneously using batch inference APIs"
+            },
+            {
+                "id": "D",
+                "text": "Inherent randomness causing the same input to produce different outputs across invocations"
             }
         ],
         "correct_answer": "D",
@@ -281,20 +281,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What is the purpose of a dead-letter queue (DLQ) in agent messaging?",
         "options": [
             {
-                "id": "B",
-                "text": "Store successfully processed messages for audit"
+                "id": "A",
+                "text": "Capture messages that fail repeated processing to prevent blocking healthy execution"
             },
             {
-                "id": "A",
-                "text": "Capture messages that fail repeated processing attempts to prevent blocking healthy execution"
+                "id": "B",
+                "text": "Store successfully processed messages in an immutable audit trail with S3 Object Lock compliance mode"
             },
             {
                 "id": "C",
-                "text": "Queue high-priority messages for faster processing"
+                "text": "Queue high-priority messages in a separate FIFO queue for guaranteed ordered and faster processing"
             },
             {
                 "id": "D",
-                "text": "Route messages between different agent types"
+                "text": "Route messages between different agent types based on capability taxonomy and semantic matching rules"
             }
         ],
         "correct_answer": "A",
@@ -305,7 +305,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Routes prompts to the nearest AWS Region for lower latency"
+                "text": "Routes prompts to the nearest AWS Region using latency-based DNS routing for lower response times"
             },
             {
                 "id": "B",
@@ -313,11 +313,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Distributes requests evenly across multiple model endpoints"
+                "text": "Distributes requests evenly across multiple provisioned throughput model endpoints using round-robin scheduling"
             },
             {
                 "id": "D",
-                "text": "Compresses prompts before sending them to the model"
+                "text": "Compresses and tokenizes prompts before sending them to the model to reduce input token consumption"
             }
         ],
         "correct_answer": "B",
@@ -327,20 +327,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What is a 'hallucination' in generative AI?",
         "options": [
             {
-                "id": "B",
-                "text": "When a model refuses to generate any output"
+                "id": "A",
+                "text": "When a model generates plausible but factually incorrect information"
             },
             {
-                "id": "A",
-                "text": "When a model generates plausible-sounding but factually incorrect or fabricated information"
+                "id": "B",
+                "text": "When a model refuses to generate any output due to overly aggressive content filtering guardrail configuration"
             },
             {
                 "id": "C",
-                "text": "When a model produces output in the wrong language"
+                "text": "When a model produces output in an unexpected language despite locale-specific system prompt instructions"
             },
             {
                 "id": "D",
-                "text": "When a model runs out of context window space"
+                "text": "When a model exceeds the context window limit and silently truncates earlier conversation turns"
             }
         ],
         "correct_answer": "A",
@@ -350,20 +350,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What does the InvokeInlineAgent API allow in Amazon Bedrock?",
         "options": [
             {
-                "id": "B",
-                "text": "Invoke a pre-configured agent with fixed settings"
+                "id": "A",
+                "text": "Configure FM, instructions, and action groups dynamically at runtime without pre-creating an agent"
             },
             {
-                "id": "A",
-                "text": "Dynamically configure the FM, instructions, action groups, and knowledge bases at runtime without pre-creating an agent"
+                "id": "B",
+                "text": "Invoke a pre-configured agent with fixed settings and persistent session state stored in AgentCore Memory"
             },
             {
                 "id": "C",
-                "text": "Run an agent inside a Lambda function"
+                "text": "Run an agent inside a Lambda function with provisioned concurrency and VPC networking configuration"
             },
             {
                 "id": "D",
-                "text": "Stream agent responses over WebSocket connections"
+                "text": "Stream agent responses over bidirectional WebSocket connections with AgentCore Runtime session isolation"
             }
         ],
         "correct_answer": "A",
@@ -374,11 +374,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Short-term (session) memory"
+                "text": "Short-term session memory with TTL-based expiration scoped to the current conversation or task context"
             },
             {
                 "id": "B",
-                "text": "Episodic memory"
+                "text": "Episodic memory that records specific past interactions and retrieves them to inform current agent decisions"
             },
             {
                 "id": "C",
@@ -386,7 +386,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Procedural memory"
+                "text": "Procedural memory that stores learned execution patterns for how agents approach recurring task types"
             }
         ],
         "correct_answer": "C",
@@ -397,7 +397,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Orchestrating parallel model inference calls"
+                "text": "Orchestrating parallel model inference calls across multiple foundation models using fan-out and fan-in patterns"
             },
             {
                 "id": "B",
@@ -405,11 +405,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "Caching intermediate agent results"
+                "text": "Caching intermediate agent results in Amazon ElastiCache to avoid redundant tool invocations across steps"
             },
             {
                 "id": "D",
-                "text": "Logging agent decisions for compliance"
+                "text": "Logging agent decisions and reasoning chains to immutable audit trails for regulatory compliance purposes"
             }
         ],
         "correct_answer": "B",
@@ -420,19 +420,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Gradually reducing model size over time to save cost"
+                "text": "Gradually reducing model size and parameter count over time using progressive distillation to save inference cost"
             },
             {
                 "id": "B",
-                "text": "Shutting down the entire system when one component fails"
+                "text": "Immediately shutting down the entire agentic system when any single component fails or becomes unresponsive"
             },
             {
                 "id": "C",
-                "text": "Maintaining partial functionality when components fail rather than experiencing complete failure"
+                "text": "Maintaining partial functionality when components fail instead of complete failure"
             },
             {
                 "id": "D",
-                "text": "Slowly reducing the number of agents in production"
+                "text": "Progressively decommissioning agents from production based on utilization metrics and cost-per-outcome thresholds"
             }
         ],
         "correct_answer": "C",
@@ -442,20 +442,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What is the purpose of Amazon Bedrock cross-region inference?",
         "options": [
             {
-                "id": "B",
-                "text": "Train models across multiple regions simultaneously"
+                "id": "A",
+                "text": "Route inference requests to other regions for higher availability and throughput"
             },
             {
-                "id": "A",
-                "text": "Automatically route inference requests to other regions for higher availability and throughput"
+                "id": "B",
+                "text": "Train and fine-tune foundation models across multiple regions simultaneously using distributed data parallelism"
             },
             {
                 "id": "C",
-                "text": "Replicate model weights to edge locations"
+                "text": "Replicate model weights to CloudFront edge locations for ultra-low-latency inference at the network edge"
             },
             {
                 "id": "D",
-                "text": "Synchronize agent memory across regions"
+                "text": "Synchronize AgentCore Memory namespaces and session state across regions for multi-region agent deployments"
             }
         ],
         "correct_answer": "A",
@@ -466,19 +466,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "A list of all models available in Amazon Bedrock"
+                "text": "A comprehensive catalog listing all foundation models available in Amazon Bedrock with pricing and region availability"
             },
             {
                 "id": "B",
-                "text": "A structured classification of each agent's skills, limitations, and requirements for routing and substitution"
+                "text": "A structured classification of agent skills, limitations, and requirements for routing and substitution"
             },
             {
                 "id": "C",
-                "text": "A cost breakdown of agent operations"
+                "text": "A detailed cost breakdown of agent operations segmented by model tier, token consumption, and tool invocations"
             },
             {
                 "id": "D",
-                "text": "A security classification of data sensitivity levels"
+                "text": "A multi-level security classification system for categorizing data sensitivity levels across agent workflows"
             }
         ],
         "correct_answer": "B",
@@ -488,20 +488,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What does Amazon Bedrock Data Automation provide for document processing?",
         "options": [
             {
-                "id": "B",
-                "text": "Only OCR text extraction from scanned documents"
+                "id": "A",
+                "text": "Document splitting, classification, extraction, normalization, and validation in one managed service"
             },
             {
-                "id": "A",
-                "text": "Document splitting, classification, extraction, normalization, and validation in a single managed service"
+                "id": "B",
+                "text": "OCR text extraction from scanned documents with automatic table detection and key-value pair recognition"
             },
             {
                 "id": "C",
-                "text": "Only PDF to text conversion"
+                "text": "PDF to text conversion with layout preservation, font detection, and multi-column paragraph reflow support"
             },
             {
                 "id": "D",
-                "text": "Manual document labeling and annotation tools"
+                "text": "Manual document labeling and annotation tools with active learning for training custom extraction models"
             }
         ],
         "correct_answer": "A",
@@ -512,7 +512,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "A hardware device that protects servers from power surges"
+                "text": "A physical hardware device installed in data center racks that protects servers from electrical power surges"
             },
             {
                 "id": "B",
@@ -520,11 +520,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "C",
-                "text": "A rate limiter that caps requests per second"
+                "text": "A rate limiter that caps the maximum number of API requests per second using token bucket algorithms"
             },
             {
                 "id": "D",
-                "text": "A load balancer that distributes traffic evenly"
+                "text": "A load balancer that distributes incoming traffic evenly across agent instances using health-check probes"
             }
         ],
         "correct_answer": "B",
@@ -535,11 +535,11 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Content filters"
+                "text": "Content filters that detect harmful text across hate, insults, sexual, violence, and misconduct categories"
             },
             {
                 "id": "B",
-                "text": "Word filters"
+                "text": "Word filters that use case-insensitive whole-word matching to block profanity and custom-defined terms"
             },
             {
                 "id": "C",
@@ -547,7 +547,7 @@ export const FLASH_CARDS_001: RawQuestion[] = [
             },
             {
                 "id": "D",
-                "text": "Denied topics"
+                "text": "Denied topics that use semantic matching to block user-defined subjects in both inputs and model outputs"
             }
         ],
         "correct_answer": "C",
@@ -558,19 +558,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "The ability to run on multiple platforms — enables portability"
+                "text": "The ability to run on multiple cloud platforms and operating systems simultaneously — enables vendor portability"
             },
             {
                 "id": "B",
-                "text": "An operation producing the same result when executed multiple times — enables safe retries after failures"
+                "text": "An operation producing the same result when executed multiple times — enables safe retries"
             },
             {
                 "id": "C",
-                "text": "The ability to process inputs in any order — enables parallelism"
+                "text": "The ability to accept and process inputs in any arbitrary order without dependencies — enables parallelism"
             },
             {
                 "id": "D",
-                "text": "Running identical code across regions — enables disaster recovery"
+                "text": "Running identical application code across multiple AWS regions with automatic state synchronization"
             }
         ],
         "correct_answer": "B",
@@ -581,19 +581,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "User authentication and login pages"
+                "text": "Managed user authentication with hosted login pages, MFA, and social federation for end-user applications"
+            },
+            {
+                "id": "B",
+                "text": "Centralized API key management and automatic rotation for external third-party service integrations"
+            },
+            {
+                "id": "C",
+                "text": "DNS-based service discovery using AWS Cloud Map that enables agents to locate peer services by name"
             },
             {
                 "id": "D",
                 "text": "Unique verifiable identities for agents with fine-grained access control and a token vault"
-            },
-            {
-                "id": "C",
-                "text": "DNS-based service discovery for agents"
-            },
-            {
-                "id": "B",
-                "text": "API key management for external services"
             }
         ],
         "correct_answer": "D",
@@ -604,19 +604,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "A pattern where one supervisor agent delegates all tasks to worker agents"
-            },
-            {
-                "id": "D",
-                "text": "A pattern where agents work independently on overlapping aspects of a problem, sharing findings through a common workspace without centralized supervision"
-            },
-            {
-                "id": "C",
-                "text": "A pattern where all agents process the same request for redundancy"
+                "text": "A hierarchical pattern where one supervisor agent decomposes tasks and delegates them to specialized worker agents"
             },
             {
                 "id": "B",
-                "text": "A pattern where agents are deployed across multiple regions"
+                "text": "A geo-distribution pattern where agents are deployed across multiple AWS regions for latency optimization"
+            },
+            {
+                "id": "C",
+                "text": "A redundancy pattern where all agents process the same request independently to ensure fault-tolerant results"
+            },
+            {
+                "id": "D",
+                "text": "Agents working independently on overlapping aspects of a problem, sharing findings without centralized supervision"
             }
         ],
         "correct_answer": "D",
@@ -626,20 +626,20 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "question": "What is hierarchical chunking best suited for?",
         "options": [
             {
-                "id": "B",
-                "text": "Short FAQ documents with simple structure"
-            },
-            {
                 "id": "A",
                 "text": "Complex documents with nested structures, like academic papers with nested tables"
             },
             {
+                "id": "B",
+                "text": "Short FAQ documents with simple question-answer pairs and consistent single-paragraph formatting throughout"
+            },
+            {
                 "id": "C",
-                "text": "Streaming real-time data from IoT sensors"
+                "text": "Streaming real-time IoT sensor data that requires continuous ingestion with sub-second processing latency"
             },
             {
                 "id": "D",
-                "text": "Audio transcription files"
+                "text": "Audio transcription files generated by Amazon Transcribe with speaker diarization and timestamp metadata"
             }
         ],
         "correct_answer": "A",
@@ -650,19 +650,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "Caches the full model response for identical prompts"
-            },
-            {
-                "id": "C",
-                "text": "Caches the processed stable system prompt prefix to reduce per-invocation input token costs"
+                "text": "Caches the full model response for identical prompts and returns it instantly on subsequent matching requests"
             },
             {
                 "id": "B",
-                "text": "Stores prompt templates in a version-controlled repository"
+                "text": "Stores versioned prompt templates in a managed repository with rollback, A/B testing, and approval workflows"
+            },
+            {
+                "id": "C",
+                "text": "Caches the stable system prompt prefix to reduce per-invocation input token costs"
             },
             {
                 "id": "D",
-                "text": "Pre-computes embeddings for frequently used prompts"
+                "text": "Pre-computes and stores vector embeddings for frequently used prompts to accelerate semantic search retrieval"
             }
         ],
         "correct_answer": "C",
@@ -673,19 +673,19 @@ export const FLASH_CARDS_001: RawQuestion[] = [
         "options": [
             {
                 "id": "A",
-                "text": "The hardware resources an agent consumes during inference"
+                "text": "The total hardware resources including GPU memory, compute units, and network bandwidth consumed during inference"
             },
             {
                 "id": "B",
-                "text": "The reasoning process: perceiving context, formulating a plan, selecting actions, and evaluating outcomes"
+                "text": "Perceiving context, formulating a plan, selecting actions, and evaluating outcomes"
             },
             {
                 "id": "C",
-                "text": "The agent's ability to communicate with users in natural language"
+                "text": "The agent's built-in natural language understanding and generation capability for multi-turn user conversations"
             },
             {
                 "id": "D",
-                "text": "The model fine-tuning process for domain specialization"
+                "text": "The supervised fine-tuning and reinforcement learning process used to specialize a model for a specific domain"
             }
         ],
         "correct_answer": "B",
